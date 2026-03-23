@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>EnviroCore Management & Consulting</title>
+    <style>
+        body { font-family: sans-serif; text-align: center; padding: 50px; background: #f4f7f6; }
+        h1 { color: #2e7d32; }
+        p { color: #555; }
+    </style>
+</head>
+<body>
+    <h1>EnviroCore Management & Consulting</h1>
+    <p>Professional Environmental Engineering & ESG Solutions.</p>
+    <hr style="width:50%; border: 1px solid #ddd;">
+    <p>Site under development. Contact: [Your Email]</p>
+</body>
+</html>
