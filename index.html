@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>EnviroCore Engineering & Management Consultants</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+<style>
+body { margin:0; font-family:'Poppins',sans-serif; background:#0A2540; color:white;}
+header {display:flex; justify-content:space-between; padding:15px 40px; position:fixed; width:100%; background:rgba(10,37,64,0.9);}
+nav a {color:white; margin-left:20px; text-decoration:none;}
+.hero {height:100vh; display:flex; align-items:center; justify-content:center; text-align:center;}
+.btn {margin-top:20px; padding:12px 30px; background:#2ECC71; border:none; color:white;}
+.services {padding:80px 40px; text-align:center; background:#111;}
+.grid {display:grid; grid-template-columns:repeat(auto-fit,minmax(220px,1fr)); gap:20px;}
+.card {background:#1a1a1a; padding:25px; border-radius:10px;}
+.form-section {padding:80px 40px;}
+input,select,textarea {width:100%; padding:12px; margin:10px 0;}
+footer {text-align:center; padding:20px; background:black;}
+</style>
+</head>
+<body>
+
+<header>
+<h2>EnviroCore</h2>
+<nav>
+<a href="#">Home</a>
+<a href="#services">Services</a>
+<a href="#form">Contact</a>
+</nav>
+</header>
+
+<section class="hero">
+<div>
+<h2>Engineering a Sustainable Future</h2>
+<p>EIA | IEE | ESG | Smart Environmental Solutions</p>
+<button class="btn" onclick="document.getElementById('form').scrollIntoView()">Start Project</button>
+</div>
+</section>
+
+<section class="services" id="services">
+<h2>Our Services</h2>
+<div class="grid">
+<div class="card"><h3>EIA</h3></div>
+<div class="card"><h3>IEE</h3></div>
+<div class="card"><h3>ESG</h3></div>
+<div class="card"><h3>Waste</h3></div>
+<div class="card"><h3>Engineering</h3></div>
+</div>
+</section>
+
+<section class="form-section" id="form">
+<h2>Submit Your Project</h2>
+<form>
+<input type="text" placeholder="Full Name" required>
+<input type="email" placeholder="Email" required>
+<textarea placeholder="Project Description"></textarea>
+<button class="btn">Submit</button>
+</form>
+</section>
+
+<footer>
+<p>© 2026 EnviroCore Engineering & Management Consultants</p>
+<p>Engr. Saeed Ur Rehman | Karachi, Pakistan</p>
+</footer>
+
+</body>
+</html>
