@@ -1,113 +1,170 @@
-<!DOCTYPE html>
-<html lang="en">
+<!DOCTYPE html><html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>EnviroCore | Engineering & Management Consultants</title>
-    
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&family=Inter:wght@300;400&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>EnviroCore | Engineering & Management Consultants</title><link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&family=Inter:wght@300;400&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"><style>
+:root {
+    --bg-dark:#070e17;
+    --bg-card:rgba(16,28,45,0.6);
+    --neon-green:#00ff88;
+    --neon-blue:#00b8ff;
+    --text-main:#f0f4f8;
+    --text-muted:#94a3b8;
+}
 
-    <style>
-        :root {
-            --bg-dark: #070e17;
-            --bg-card: rgba(16, 28, 45, 0.6);
-            --neon-green: #00ff88;
-            --neon-blue: #00b8ff;
-            --text-main: #f0f4f8;
-            --text-muted: #94a3b8;
-            --glass-border: rgba(255, 255, 255, 0.1);
-        }
+*{margin:0;padding:0;box-sizing:border-box;scroll-behavior:smooth;}
+body{font-family:'Inter',sans-serif;background:var(--bg-dark);color:var(--text-main);}
 
-        * { margin: 0; padding: 0; box-sizing: border-box; scroll-behavior: smooth; }
-        body { font-family: 'Inter', sans-serif; background-color: var(--bg-dark); color: var(--text-main); overflow-x: hidden; }
+/* HEADER */
+header{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    padding:10px 5%;
+    position:fixed;
+    width:100%;
+    background:rgba(7,14,23,0.9);
+    backdrop-filter:blur(10px);
+    z-index:1000;
+}
+.logo-container{display:flex;align-items:center;gap:10px;}
+.main-logo{
+    height:55px;width:55px;border-radius:50%;
+    border:2px solid var(--neon-green);
+}
+.logo-text{font-family:'Outfit';font-weight:800;}
 
-        /* Animations */
-        @keyframes float { 0%, 100% { transform: translateY(0px); } 50% { transform: translateY(-10px); } }
-        .hidden { opacity: 0; transform: translateY(30px); transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1); }
-        .show { opacity: 1; transform: translateY(0); }
+nav a{
+    margin-left:20px;
+    text-decoration:none;
+    color:white;
+    font-size:13px;
+}
+nav a:hover{color:var(--neon-green);}
 
-        /* Header & Navigation */
-        header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 10px 5%;
-            position: fixed;
-            width: 100%;
-            background: rgba(7, 14, 23, 0.9);
-            backdrop-filter: blur(15px);
-            border-bottom: 1px solid var(--glass-border);
-            z-index: 1000;
-        }
+/* HERO */
+.hero{
+    height:100vh;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    text-align:center;
+}
+.hero h2{font-size:50px;margin-bottom:10px;}
+.hero p{color:var(--neon-green);margin-bottom:20px;}
 
-        .logo-container { display: flex; align-items: center; gap: 15px; }
-        
-        /* Fixed Logo Style */
-        .main-logo { 
-            height: 60px; 
-            width: 60px; 
-            border-radius: 50%; 
-            border: 2px solid var(--neon-green); 
-            object-fit: cover;
-            background: white; /* Helps if logo has transparency */
-        }
-        
-        .logo-text { font-family: 'Outfit', sans-serif; font-size: 24px; font-weight: 800; color: #fff; letter-spacing: 1px; }
+.btn{
+    padding:14px 30px;
+    border:1px solid var(--neon-green);
+    color:var(--neon-green);
+    background:transparent;
+    border-radius:40px;
+    cursor:pointer;
+}
+.btn:hover{background:var(--neon-green);color:black;}
 
-        nav a {
-            color: var(--text-main);
-            margin-left: 25px;
-            text-decoration: none;
-            font-size: 13px;
-            font-weight: 600;
-            text-transform: uppercase;
-            transition: 0.3s;
-        }
-        nav a:hover { color: var(--neon-green); }
+/* SERVICES */
+.section{padding:90px 5%;text-align:center;}
+.grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
+    gap:25px;
+    margin-top:40px;
+}
+.card{
+    background:var(--bg-card);
+    padding:30px;
+    border-radius:15px;
+}
+.card i{font-size:35px;color:var(--neon-blue);margin-bottom:15px;}
 
-        /* Hero Section */
-        .hero {
-            height: 100vh;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            text-align: center;
-            background: radial-gradient(circle at center, rgba(0, 184, 255, 0.1) 0%, var(--bg-dark) 85%);
-            padding: 0 20px;
-        }
+/* FORM */
+form{
+    max-width:600px;
+    margin:auto;
+    background:var(--bg-card);
+    padding:40px;
+    border-radius:20px;
+}
+input,select,textarea{
+    width:100%;
+    padding:12px;
+    margin:10px 0;
+    border:none;
+    border-radius:8px;
+}
+button.submit{width:100%;}
 
-        .hero h2 { font-family: 'Outfit', sans-serif; font-size: clamp(35px, 7vw, 65px); line-height: 1.1; margin-bottom: 20px; }
-        .hero p { color: var(--neon-green); font-size: 18px; text-transform: uppercase; letter-spacing: 4px; margin-bottom: 35px; }
+/* FOOTER */
+footer{text-align:center;padding:30px;background:black;}
 
-        /* Buttons */
-        .btn {
-            padding: 16px 40px;
-            background: transparent;
-            border: 1px solid var(--neon-green);
-            color: var(--neon-green);
-            font-weight: 700;
-            border-radius: 50px;
-            cursor: pointer;
-            transition: 0.4s;
-            text-transform: uppercase;
-            font-size: 14px;
-        }
-        .btn:hover { background: var(--neon-green); color: var(--bg-dark); box-shadow: 0 0 25px rgba(0, 255, 136, 0.5); }
+/* WHATSAPP FIXED */
+.whatsapp{
+    position:fixed;
+    bottom:25px;
+    right:25px;
+    width:65px;height:65px;
+    background:#25D366;
+    border-radius:50%;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-size:30px;
+    color:white;
+    z-index:9999;
+    pointer-events:auto;
+}
+</style></head><body><header>
+<div class="logo-container">
+<img src="1000158519.png" class="main-logo">
+<span class="logo-text">ENVIROCORE</span>
+</div><nav>
+<a href="#">Home</a>
+<a href="#services">Services</a>
+<a href="#form">Contact</a>
+</nav>
+</header><section class="hero">
+<div>
+<p>Engineering & Management Consultants</p>
+<h2>Sustainable Solutions for a Greener Future</h2>
+<button class="btn" onclick="document.getElementById('form').scrollIntoView()">Start Project</button>
+</div>
+</section><section class="section" id="services">
+<h2>Our Expertise</h2><div class="grid">
+<div class="card">
+<i class="fa-solid fa-file-shield"></i>
+<h3>EIA & IEE</h3>
+<p>Environmental assessments for compliance.</p>
+</div><div class="card">
+<i class="fa-solid fa-leaf"></i>
+<h3>ESG</h3>
+<p>Corporate sustainability and reporting.</p>
+</div><div class="card">
+<i class="fa-solid fa-drafting-compass"></i>
+<h3>Engineering</h3>
+<p>Design and infrastructure solutions.</p>
+</div>
+</div>
+</section><section class="section" id="form">
+<h2>Project Inquiry</h2><form action="https://formspree.io/f/mzdkbpep" method="POST">
+<input type="text" name="name" placeholder="Full Name" required>
+<input type="email" name="email" placeholder="Email (use business email if error occurs)" required><select name="service" required>
+<option value="">Select Service</option>
+<option>EIA / IEE</option>
+<option>ESG</option>
+<option>Engineering</option>
+</select><textarea name="message" placeholder="Project details..." required></textarea><button class="btn submit">Submit Request</button>
 
-        /* Services Grid */
-        .section { padding: 100px 5%; text-align: center; }
-        .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 30px; margin-top: 50px; }
-        .card { background: var(--bg-card); padding: 45px; border-radius: 25px; border: 1px solid var(--glass-border); transition: 0.4s; }
-        .card:hover { transform: translateY(-15px); border-color: var(--neon-blue); box-shadow: 0 10px 30px rgba(0,0,0,0.5); }
-        .card i { font-size: 40px; color: var(--neon-blue); margin-bottom: 25px; }
-
-        /* Form Styling */
-        form { 
-            max-width: 650px; 
-            margin: 50px auto; 
+</form>
+</section><footer>
+<p><strong>EnviroCore Engineering & Management Consultants</strong></p>
+<p>Engr. Saeed Ur Rehman</p>
+<p>Karachi, Pakistan</p>
+</footer><!-- ✅ WHATSAPP FINAL FIX --><a href="https://wa.me/923163896489" target="_blank" rel="noopener noreferrer" class="whatsapp">
+<i class="fa-brands fa-whatsapp"></i>
+</a></body>
+</html>            margin: 50px auto; 
             background: var(--bg-card); 
             padding: 50px; 
             border-radius: 30px; 
