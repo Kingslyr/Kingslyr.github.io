@@ -18,18 +18,18 @@
             --neon-blue: #00b8ff;
             --text-main: #f0f4f8;
             --text-muted: #94a3b8;
-            --glass-border: rgba(255, 255, 255, 0.05);
+            --glass-border: rgba(255, 255, 255, 0.1);
         }
 
         * { margin: 0; padding: 0; box-sizing: border-box; scroll-behavior: smooth; }
         body { font-family: 'Inter', sans-serif; background-color: var(--bg-dark); color: var(--text-main); overflow-x: hidden; }
 
-        /* ANIMATIONS */
+        /* Animations */
         @keyframes float { 0%, 100% { transform: translateY(0px); } 50% { transform: translateY(-10px); } }
         .hidden { opacity: 0; transform: translateY(30px); transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1); }
         .show { opacity: 1; transform: translateY(0); }
 
-        /* NAVBAR & LOGO */
+        /* Header & Navigation */
         header {
             display: flex;
             justify-content: space-between;
@@ -37,15 +37,25 @@
             padding: 10px 5%;
             position: fixed;
             width: 100%;
-            background: rgba(7, 14, 23, 0.85);
-            backdrop-filter: blur(12px);
+            background: rgba(7, 14, 23, 0.9);
+            backdrop-filter: blur(15px);
             border-bottom: 1px solid var(--glass-border);
             z-index: 1000;
         }
 
-        .logo-container { display: flex; align-items: center; gap: 12px; }
-        .main-logo { height: 50px; width: 50px; border-radius: 50%; border: 1px solid var(--neon-green); object-fit: cover; }
-        .logo-text { font-family: 'Outfit', sans-serif; font-size: 22px; font-weight: 800; color: #fff; letter-spacing: 1px; }
+        .logo-container { display: flex; align-items: center; gap: 15px; }
+        
+        /* Fixed Logo Style */
+        .main-logo { 
+            height: 60px; 
+            width: 60px; 
+            border-radius: 50%; 
+            border: 2px solid var(--neon-green); 
+            object-fit: cover;
+            background: white; /* Helps if logo has transparency */
+        }
+        
+        .logo-text { font-family: 'Outfit', sans-serif; font-size: 24px; font-weight: 800; color: #fff; letter-spacing: 1px; }
 
         nav a {
             color: var(--text-main);
@@ -58,55 +68,190 @@
         }
         nav a:hover { color: var(--neon-green); }
 
-        /* HERO */
+        /* Hero Section */
         .hero {
             height: 100vh;
             display: flex;
             align-items: center;
             justify-content: center;
             text-align: center;
-            background: radial-gradient(circle at center, rgba(0, 184, 255, 0.1) 0%, var(--bg-dark) 80%);
+            background: radial-gradient(circle at center, rgba(0, 184, 255, 0.1) 0%, var(--bg-dark) 85%);
+            padding: 0 20px;
         }
 
-        .hero h2 { font-family: 'Outfit', sans-serif; font-size: clamp(32px, 8vw, 64px); line-height: 1.1; margin-bottom: 20px; }
-        .hero p { color: var(--neon-green); font-size: 18px; text-transform: uppercase; letter-spacing: 3px; margin-bottom: 30px; }
+        .hero h2 { font-family: 'Outfit', sans-serif; font-size: clamp(35px, 7vw, 65px); line-height: 1.1; margin-bottom: 20px; }
+        .hero p { color: var(--neon-green); font-size: 18px; text-transform: uppercase; letter-spacing: 4px; margin-bottom: 35px; }
 
-        /* BUTTONS */
+        /* Buttons */
         .btn {
-            padding: 15px 35px;
+            padding: 16px 40px;
             background: transparent;
             border: 1px solid var(--neon-green);
             color: var(--neon-green);
-            font-weight: 600;
-            border-radius: 30px;
+            font-weight: 700;
+            border-radius: 50px;
             cursor: pointer;
             transition: 0.4s;
             text-transform: uppercase;
+            font-size: 14px;
         }
-        .btn:hover { background: var(--neon-green); color: var(--bg-dark); box-shadow: 0 0 20px rgba(0, 255, 136, 0.4); }
+        .btn:hover { background: var(--neon-green); color: var(--bg-dark); box-shadow: 0 0 25px rgba(0, 255, 136, 0.5); }
 
-        /* SECTIONS */
+        /* Services Grid */
         .section { padding: 100px 5%; text-align: center; }
-        .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 25px; margin-top: 50px; }
-        .card { background: var(--bg-card); padding: 40px; border-radius: 20px; border: 1px solid var(--glass-border); transition: 0.3s; }
-        .card:hover { transform: translateY(-10px); border-color: var(--neon-blue); }
-        .card i { font-size: 35px; color: var(--neon-blue); margin-bottom: 20px; }
+        .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 30px; margin-top: 50px; }
+        .card { background: var(--bg-card); padding: 45px; border-radius: 25px; border: 1px solid var(--glass-border); transition: 0.4s; }
+        .card:hover { transform: translateY(-15px); border-color: var(--neon-blue); box-shadow: 0 10px 30px rgba(0,0,0,0.5); }
+        .card i { font-size: 40px; color: var(--neon-blue); margin-bottom: 25px; }
 
-        /* FORM */
-        form { max-width: 600px; margin: 40px auto; background: var(--bg-card); padding: 40px; border-radius: 20px; border: 1px solid var(--glass-border); text-align: left; }
-        label { display: block; margin-bottom: 8px; font-size: 14px; color: var(--neon-blue); }
-        input, select, textarea { width: 100%; padding: 15px; margin-bottom: 20px; background: rgba(0,0,0,0.2); border: 1px solid var(--glass-border); color: #fff; border-radius: 10px; outline: none; font-family: 'Inter', sans-serif; }
-        input:focus, textarea:focus { border-color: var(--neon-green); }
+        /* Form Styling */
+        form { 
+            max-width: 650px; 
+            margin: 50px auto; 
+            background: var(--bg-card); 
+            padding: 50px; 
+            border-radius: 30px; 
+            border: 1px solid var(--glass-border); 
+            text-align: left; 
+        }
+        label { display: block; margin-bottom: 10px; font-size: 14px; color: var(--neon-blue); font-weight: 600; }
+        input, select, textarea { 
+            width: 100%; 
+            padding: 16px; 
+            margin-bottom: 25px; 
+            background: rgba(0,0,0,0.3); 
+            border: 1px solid var(--glass-border); 
+            color: #fff; 
+            border-radius: 12px; 
+            outline: none; 
+            font-family: 'Inter', sans-serif;
+        }
+        input:focus, textarea:focus { border-color: var(--neon-green); box-shadow: 0 0 10px rgba(0, 255, 136, 0.2); }
 
-        /* FOOTER */
-        footer { padding: 60px 40px; text-align: center; border-top: 1px solid var(--glass-border); background: #04080d; }
-        .footer-info { margin-bottom: 20px; color: var(--text-muted); line-height: 1.6; }
+        /* Footer */
+        footer { padding: 80px 5% 40px; text-align: center; border-top: 1px solid var(--glass-border); background: #03070b; }
+        .footer-info { margin-bottom: 30px; color: var(--text-muted); line-height: 1.8; }
 
-        /* WHATSAPP */
+        /* Floating WhatsApp Icon */
         .whatsapp {
-            position: fixed; bottom: 30px; right: 30px;
-            background: #25D366; width: 60px; height: 60px;
+            position: fixed; bottom: 35px; right: 35px;
+            background: #25D366; width: 65px; height: 65px;
             display: flex; align-items: center; justify-content: center;
+            border-radius: 50%; font-size: 32px; color: #fff;
+            cursor: pointer; z-index: 1000; animation: float 3s infinite ease-in-out;
+            text-decoration: none;
+            box-shadow: 0 10px 25px rgba(37, 211, 102, 0.3);
+        }
+
+        /* Responsive Fixes */
+        @media (max-width: 768px) {
+            header { padding: 10px 20px; }
+            .logo-text { font-size: 18px; }
+            nav { display: none; }
+            form { padding: 30px; }
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="logo-container">
+            <img src="1000158519.png" alt="EnviroCore" class="main-logo">
+            <span class="logo-text">ENVIROCORE</span>
+        </div>
+        <nav>
+            <a href="#">Home</a>
+            <a href="#services">Expertise</a>
+            <a href="#form">Inquiry</a>
+        </nav>
+    </header>
+
+    <section class="hero">
+        <div class="hidden">
+            <p>Engineering & Management Consultants</p>
+            <h2>Sustainable Solutions<br>for a Greener Tomorrow</h2>
+            <button class="btn" onclick="document.getElementById('form').scrollIntoView()">Start Project Inquiry</button>
+        </div>
+    </section>
+
+    <section class="section" id="services">
+        <h2 class="hidden" style="font-size: 40px; font-family: 'Outfit'; margin-bottom: 10px;">Our Core Expertise</h2>
+        <p class="hidden" style="color: var(--text-muted);">Bridging technology with environmental preservation.</p>
+        <div class="grid">
+            <div class="card hidden">
+                <i class="fa-solid fa-file-shield"></i>
+                <h3>EIA & IEE</h3>
+                <p>Professional Environmental Impact Assessments and Initial Examinations for regulatory compliance across Pakistan.</p>
+            </div>
+            <div class="card hidden">
+                <i class="fa-solid fa-leaf"></i>
+                <h3>ESG & GHG</h3>
+                <p>Strategic ESG reporting and Greenhouse Gas auditing to align your organization with global climate standards.</p>
+            </div>
+            <div class="card hidden">
+                <i class="fa-solid fa-bezier-curve"></i>
+                <h3>AutoCAD Design</h3>
+                <p>Detailed engineering blueprints, environmental mapping, and infrastructure design services.</p>
+            </div>
+        </div>
+    </section>
+
+    <section class="section" id="form" style="background: rgba(0,0,0,0.2);">
+        <h2 class="hidden" style="font-family: 'Outfit';">Project Interface</h2>
+        <p class="hidden" style="color: var(--text-muted); margin-bottom: 20px;">Direct transmission to Engr. Saeed Ur Rehman.</p>
+        
+        <form action="https://formspree.io/f/mzdkbpep" method="POST" class="hidden">
+            <label>Full Name</label>
+            <input type="text" name="name" placeholder="Enter your name" required>
+            
+            <label>Email Address</label>
+            <input type="email" name="email" placeholder="Your professional email" required>
+            
+            <label>Primary Service</label>
+            <select name="service" required>
+                <option value="EIA/IEE">EIA / IEE Assessment</option>
+                <option value="ESG/GHG">ESG Consulting / GHG Auditing</option>
+                <option value="AutoCAD">AutoCAD / Infrastructure Design</option>
+                <option value="Other">General Environmental Inquiry</option>
+            </select>
+            
+            <label>Project Scope / Description</label>
+            <textarea name="message" rows="5" placeholder="Please describe your requirements..." required></textarea>
+            
+            <button type="submit" class="btn" style="width: 100%;">Transmit Request</button>
+        </form>
+    </section>
+
+    <footer>
+        <div class="footer-info">
+            <h3 style="color: #fff; margin-bottom: 15px; font-family: 'Outfit';">EnviroCore Engineering & Management Consultants</h3>
+            <p><strong>Engr. Saeed Ur Rehman Khalil</strong></p>
+            <p>Providing Environmental Solutions in Karachi, Hyderabad & Thatta</p>
+            <p><i class="fa-solid fa-phone" style="color: var(--neon-green); margin-right: 10px;"></i> +92 316 3896489</p>
+            <p><i class="fa-solid fa-envelope" style="color: var(--neon-blue); margin-right: 10px;"></i> saeedsamoo@yahoo.com</p>
+        </div>
+        <p style="font-size: 12px; opacity: 0.4; letter-spacing: 1px;">© 2026 ENVIROCORE. ALL RIGHTS RESERVED.</p>
+    </footer>
+
+    <a href="https://wa.me/923163896489?text=Hello%20EnviroCore!%20I%20would%20like%20to%20inquire%20about%20your%20services." 
+       class="whatsapp" target="_blank" title="Contact via WhatsApp">
+        <i class="fa-brands fa-whatsapp"></i>
+    </a>
+
+    <script>
+        // Scroll Animation Logic
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('show');
+                }
+            });
+        }, { threshold: 0.1 });
+
+        document.querySelectorAll('.hidden').forEach(el => observer.observe(el));
+    </script>
+</body>
+</html>
             border-radius: 50%; font-size: 30px; color: #fff;
             cursor: pointer; z-index: 1000; animation: float 3s infinite ease-in-out;
             text-decoration: none;
