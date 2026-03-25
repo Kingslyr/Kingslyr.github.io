@@ -1,9 +1,14 @@
-<!DOCTYPE html><html lang="en">
+<!DOCTYPE html>
+<html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>EnviroCore | Engineering & Management Consultants</title><link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&family=Inter:wght@300;400&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"><style>
+<title>EnviroCore | Engineering & Management Consultants</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&family=Inter:wght@300;400&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+<style>
 :root {
     --bg-dark:#070e17;
     --bg-card:rgba(16,28,45,0.6);
@@ -33,7 +38,7 @@ header{
     height:55px;width:55px;border-radius:50%;
     border:2px solid var(--neon-green);
 }
-.logo-text{font-family:'Outfit';font-weight:800;}
+.logo-text{font-family:'Outfit';font-weight:800;color:white;}
 
 nav a{
     margin-left:20px;
@@ -76,7 +81,10 @@ nav a:hover{color:var(--neon-green);}
     background:var(--bg-card);
     padding:30px;
     border-radius:15px;
+    border:1px solid rgba(255,255,255,0.1);
+    transition:0.3s;
 }
+.card:hover{transform:translateY(-10px);box-shadow:0 10px 25px rgba(0,0,0,0.5);}
 .card i{font-size:35px;color:var(--neon-blue);margin-bottom:15px;}
 
 /* FORM */
@@ -93,11 +101,14 @@ input,select,textarea{
     margin:10px 0;
     border:none;
     border-radius:8px;
+    background:rgba(0,0,0,0.3);
+    color:white;
 }
-button.submit{width:100%;}
+button.submit{width:100%;padding:14px;border:none;border-radius:40px;background:var(--neon-green);color:black;cursor:pointer;}
+button.submit:hover{box-shadow:0 0 20px rgba(0,255,136,0.5);}
 
 /* FOOTER */
-footer{text-align:center;padding:30px;background:black;}
+footer{text-align:center;padding:30px;background:#03070b;}
 
 /* WHATSAPP FIXED */
 .whatsapp{
@@ -114,35 +125,94 @@ footer{text-align:center;padding:30px;background:black;}
     color:white;
     z-index:9999;
     pointer-events:auto;
+    text-decoration:none;
+    box-shadow:0 10px 25px rgba(37,211,102,0.3);
 }
-</style></head><body><header>
+</style>
+</head>
+
+<body>
+
+<header>
 <div class="logo-container">
 <img src="1000158519.png" class="main-logo">
 <span class="logo-text">ENVIROCORE</span>
-</div><nav>
+</div>
+
+<nav>
 <a href="#">Home</a>
 <a href="#services">Services</a>
 <a href="#form">Contact</a>
 </nav>
-</header><section class="hero">
+</header>
+
+<section class="hero">
 <div>
 <p>Engineering & Management Consultants</p>
 <h2>Sustainable Solutions for a Greener Future</h2>
 <button class="btn" onclick="document.getElementById('form').scrollIntoView()">Start Project</button>
 </div>
-</section><section class="section" id="services">
-<h2>Our Expertise</h2><div class="grid">
+</section>
+
+<section class="section" id="services">
+<h2>Our Expertise</h2>
+
+<div class="grid">
 <div class="card">
 <i class="fa-solid fa-file-shield"></i>
 <h3>EIA & IEE</h3>
-<p>Environmental assessments for compliance.</p>
-</div><div class="card">
+<p>Environmental Impact Assessments and Initial Environmental Examinations across Pakistan.</p>
+</div>
+
+<div class="card">
 <i class="fa-solid fa-leaf"></i>
 <h3>ESG</h3>
-<p>Corporate sustainability and reporting.</p>
-</div><div class="card">
+<p>Corporate sustainability, ESG reporting, and GHG auditing.</p>
+</div>
+
+<div class="card">
 <i class="fa-solid fa-drafting-compass"></i>
-<h3>Engineering</h3>
+<h3>Engineering & Design</h3>
+<p>AutoCAD blueprints, environmental mapping, and infrastructure solutions.</p>
+</div>
+</div>
+</section>
+
+<section class="section" id="form">
+<h2>Project Inquiry</h2>
+
+<form action="https://formspree.io/f/mzdkbpep" method="POST">
+<input type="text" name="name" placeholder="Full Name" required>
+<input type="email" name="email" placeholder="Email (business email recommended)" required>
+
+<select name="service" required>
+<option value="">Select Service</option>
+<option value="EIA/IEE">EIA / IEE Assessment</option>
+<option value="ESG">ESG / GHG Consulting</option>
+<option value="Engineering">Engineering / Design</option>
+<option value="Other">Other Inquiry</option>
+</select>
+
+<textarea name="message" placeholder="Project details..." rows="5" required></textarea>
+
+<button type="submit" class="submit">Submit Request</button>
+</form>
+</section>
+
+<footer>
+<p><strong>EnviroCore Engineering & Management Consultants</strong></p>
+<p>Engr. Saeed Ur Rehman</p>
+<p>Karachi, Pakistan</p>
+<p>© 2026 ENVIROCORE. ALL RIGHTS RESERVED.</p>
+</footer>
+
+<!-- ✅ WhatsApp -->
+<a href="https://wa.me/923362171881?text=Hello%20EnviroCore%2C%20I%20need%20EIA%20services" target="_blank" class="whatsapp">
+<i class="fa-brands fa-whatsapp"></i>
+</a>
+
+</body>
+</html><h3>Engineering</h3>
 <p>Design and infrastructure solutions.</p>
 </div>
 </div>
