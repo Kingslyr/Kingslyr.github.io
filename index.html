@@ -8,7 +8,6 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&family=Inter:wght@300;400&display=swap" rel="stylesheet">
-    
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
     <style>
@@ -22,125 +21,195 @@
             --glass-border: rgba(255, 255, 255, 0.05);
         }
 
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            scroll-behavior: smooth;
-        }
+        * { margin: 0; padding: 0; box-sizing: border-box; scroll-behavior: smooth; }
+        body { font-family: 'Inter', sans-serif; background-color: var(--bg-dark); color: var(--text-main); overflow-x: hidden; }
 
-        body {
-            font-family: 'Inter', sans-serif;
-            background-color: var(--bg-dark);
-            color: var(--text-main);
-            overflow-x: hidden;
-        }
+        /* ANIMATIONS */
+        @keyframes float { 0%, 100% { transform: translateY(0px); } 50% { transform: translateY(-10px); } }
+        .hidden { opacity: 0; transform: translateY(30px); transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1); }
+        .show { opacity: 1; transform: translateY(0); }
 
-        h1, h2, h3 {
-            font-family: 'Outfit', sans-serif;
-        }
-
-        /* --- ANIMATIONS --- */
-        @keyframes float {
-            0% { transform: translateY(0px); }
-            50% { transform: translateY(-10px); }
-            100% { transform: translateY(0px); }
-        }
-
-        @keyframes glow {
-            0% { box-shadow: 0 0 5px rgba(0, 255, 136, 0.2); }
-            50% { box-shadow: 0 0 20px rgba(0, 255, 136, 0.6); }
-            100% { box-shadow: 0 0 5px rgba(0, 255, 136, 0.2); }
-        }
-
-        .hidden {
-            opacity: 0;
-            transform: translateY(30px);
-            transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
-        }
-
-        .show {
-            opacity: 1;
-            transform: translateY(0);
-        }
-
-        /* --- NAVBAR --- */
+        /* NAVBAR & LOGO */
         header {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 20px 5%;
+            padding: 10px 5%;
             position: fixed;
             width: 100%;
-            background: rgba(7, 14, 23, 0.8);
+            background: rgba(7, 14, 23, 0.85);
             backdrop-filter: blur(12px);
             border-bottom: 1px solid var(--glass-border);
             z-index: 1000;
-            transition: 0.3s;
         }
 
-        .logo {
-            font-size: 24px;
-            font-weight: 800;
-            background: linear-gradient(90deg, var(--neon-green), var(--neon-blue));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            letter-spacing: 1px;
-        }
+        .logo-container { display: flex; align-items: center; gap: 12px; }
+        .main-logo { height: 50px; width: 50px; border-radius: 50%; border: 1px solid var(--neon-green); object-fit: cover; }
+        .logo-text { font-family: 'Outfit', sans-serif; font-size: 22px; font-weight: 800; color: #fff; letter-spacing: 1px; }
 
         nav a {
             color: var(--text-main);
-            margin-left: 30px;
+            margin-left: 25px;
             text-decoration: none;
-            font-size: 14px;
+            font-size: 13px;
             font-weight: 600;
             text-transform: uppercase;
-            letter-spacing: 1px;
-            transition: 0.3s;
-            position: relative;
-        }
-
-        nav a::after {
-            content: '';
-            position: absolute;
-            width: 0;
-            height: 2px;
-            bottom: -5px;
-            left: 0;
-            background-color: var(--neon-green);
             transition: 0.3s;
         }
-
-        nav a:hover::after { width: 100%; }
         nav a:hover { color: var(--neon-green); }
 
-        /* --- HERO --- */
+        /* HERO */
         .hero {
             height: 100vh;
             display: flex;
             align-items: center;
             justify-content: center;
             text-align: center;
-            position: relative;
-            background: radial-gradient(circle at center, rgba(0, 184, 255, 0.1) 0%, var(--bg-dark) 70%);
-            padding: 0 20px;
+            background: radial-gradient(circle at center, rgba(0, 184, 255, 0.1) 0%, var(--bg-dark) 80%);
         }
 
-        .hero::before {
-            content: '';
-            position: absolute;
-            top: 0; left: 0; right: 0; bottom: 0;
-            background-image: url('https://images.unsplash.com/photo-1451187580459-43490279c0fa?q=80&w=2072&auto=format&fit=crop');
-            background-size: cover;
-            background-position: center;
-            opacity: 0.15;
-            z-index: -1;
-        }
+        .hero h2 { font-family: 'Outfit', sans-serif; font-size: clamp(32px, 8vw, 64px); line-height: 1.1; margin-bottom: 20px; }
+        .hero p { color: var(--neon-green); font-size: 18px; text-transform: uppercase; letter-spacing: 3px; margin-bottom: 30px; }
 
-        .hero h2 {
-            font-size: 64px;
-            font-weight: 800;
-            margin-bottom: 20px;
+        /* BUTTONS */
+        .btn {
+            padding: 15px 35px;
+            background: transparent;
+            border: 1px solid var(--neon-green);
+            color: var(--neon-green);
+            font-weight: 600;
+            border-radius: 30px;
+            cursor: pointer;
+            transition: 0.4s;
+            text-transform: uppercase;
+        }
+        .btn:hover { background: var(--neon-green); color: var(--bg-dark); box-shadow: 0 0 20px rgba(0, 255, 136, 0.4); }
+
+        /* SECTIONS */
+        .section { padding: 100px 5%; text-align: center; }
+        .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 25px; margin-top: 50px; }
+        .card { background: var(--bg-card); padding: 40px; border-radius: 20px; border: 1px solid var(--glass-border); transition: 0.3s; }
+        .card:hover { transform: translateY(-10px); border-color: var(--neon-blue); }
+        .card i { font-size: 35px; color: var(--neon-blue); margin-bottom: 20px; }
+
+        /* FORM */
+        form { max-width: 600px; margin: 40px auto; background: var(--bg-card); padding: 40px; border-radius: 20px; border: 1px solid var(--glass-border); text-align: left; }
+        label { display: block; margin-bottom: 8px; font-size: 14px; color: var(--neon-blue); }
+        input, select, textarea { width: 100%; padding: 15px; margin-bottom: 20px; background: rgba(0,0,0,0.2); border: 1px solid var(--glass-border); color: #fff; border-radius: 10px; outline: none; font-family: 'Inter', sans-serif; }
+        input:focus, textarea:focus { border-color: var(--neon-green); }
+
+        /* FOOTER */
+        footer { padding: 60px 40px; text-align: center; border-top: 1px solid var(--glass-border); background: #04080d; }
+        .footer-info { margin-bottom: 20px; color: var(--text-muted); line-height: 1.6; }
+
+        /* WHATSAPP */
+        .whatsapp {
+            position: fixed; bottom: 30px; right: 30px;
+            background: #25D366; width: 60px; height: 60px;
+            display: flex; align-items: center; justify-content: center;
+            border-radius: 50%; font-size: 30px; color: #fff;
+            cursor: pointer; z-index: 1000; animation: float 3s infinite ease-in-out;
+            text-decoration: none;
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="logo-container">
+            <img src="1000158519.png" alt="EnviroCore Logo" class="main-logo">
+            <span class="logo-text">ENVIROCORE</span>
+        </div>
+        <nav>
+            <a href="#">Home</a>
+            <a href="#services">Expertise</a>
+            <a href="#form">Contact</a>
+        </nav>
+    </header>
+
+    <section class="hero">
+        <div class="hidden">
+            <p>Engineering & Management Consultants</p>
+            <h2>Sustainable Solutions<br>for a Greener Tomorrow</h2>
+            <button class="btn" onclick="document.getElementById('form').scrollIntoView()">Start Consultation</button>
+        </div>
+    </section>
+
+    <section class="section" id="services">
+        <h2 class="hidden" style="font-size: 36px; font-family: 'Outfit';">Our Core Expertise</h2>
+        <div class="grid">
+            <div class="card hidden">
+                <i class="fa-solid fa-file-contract"></i>
+                <h3>EIA & IEE</h3>
+                <p>Professional Environmental Impact Assessments and Initial Examinations for projects in Sindh and beyond.</p>
+            </div>
+            <div class="card hidden">
+                <i class="fa-solid fa-chart-line"></i>
+                <h3>ESG & GHG</h3>
+                <p>Strategic ESG reporting and Greenhouse Gas auditing to ensure global sustainability compliance.</p>
+            </div>
+            <div class="card hidden">
+                <i class="fa-solid fa-drafting-dots"></i>
+                <h3>Technical Design</h3>
+                <p>High-precision AutoCAD engineering designs and environmental infrastructure blueprints.</p>
+            </div>
+        </div>
+    </section>
+
+    <section class="section" id="form">
+        <h2 class="hidden" style="font-family: 'Outfit';">Project Inquiry</h2>
+        <p class="hidden" style="color: var(--text-muted); margin-bottom: 20px;">Submit your requirements directly to our engineering team.</p>
+        
+        <form action="https://formspree.io/f/mzdkbpep" method="POST" class="hidden">
+            <label>Full Name</label>
+            <input type="text" name="name" placeholder="Enter your name" required>
+            
+            <label>Email Address</label>
+            <input type="email" name="_replyto" placeholder="Your Email" required>
+            
+            <label>Service Required</label>
+            <select name="service" required>
+                <option value="EIA/IEE">EIA / IEE</option>
+                <option value="ESG/GHG">ESG / GHG Auditing</option>
+                <option value="AutoCAD">AutoCAD / Engineering Design</option>
+                <option value="General">General Inquiry</option>
+            </select>
+            
+            <label>Project Details</label>
+            <textarea name="message" rows="5" placeholder="Describe the project scope..." required></textarea>
+            
+            <button type="submit" class="btn" style="width: 100%;">Transmit Request</button>
+        </form>
+    </section>
+
+    <footer>
+        <div class="footer-info">
+            <h3 style="color: #fff; margin-bottom: 10px;">EnviroCore Engineering & Management Consultants</h3>
+            <p>Engr. Saeed Ur Rehman Khalil</p>
+            <p>Karachi | Hyderabad | Thatta</p>
+            <p>Contact: +92 316 3896489</p>
+            <p>Email: saeedsamoo@yahoo.com</p>
+        </div>
+        <p style="font-size: 12px; opacity: 0.5;">© 2026 EnviroCore. All Rights Reserved.</p>
+    </footer>
+
+    <a href="https://wa.me/923163896489?text=Hello%20EnviroCore!%20I%20would%20like%20to%20inquire%20about%20your%20services." 
+       class="whatsapp" target="_blank" title="Chat on WhatsApp">
+        <i class="fa-brands fa-whatsapp"></i>
+    </a>
+
+    <script>
+        // SCROLL REVEAL ANIMATION
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) entry.target.classList.add('show');
+            });
+        }, { threshold: 0.1 });
+
+        document.querySelectorAll('.hidden').forEach(el => observer.observe(el));
+    </script>
+</body>
+</html>
             line-height: 1.1;
             background: linear-gradient(to right, #fff, var(--text-muted));
             -webkit-background-clip: text;
