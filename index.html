@@ -1,0 +1,546 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EnviroCore | Engineering & Management Consultants</title>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&family=Inter:wght@300;400&display=swap" rel="stylesheet">
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <style>
+        :root {
+            --bg-dark: #070e17;
+            --bg-card: rgba(16, 28, 45, 0.6);
+            --neon-green: #00ff88;
+            --neon-blue: #00b8ff;
+            --text-main: #f0f4f8;
+            --text-muted: #94a3b8;
+            --glass-border: rgba(255, 255, 255, 0.05);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg-dark);
+            color: var(--text-main);
+            overflow-x: hidden;
+        }
+
+        h1, h2, h3 {
+            font-family: 'Outfit', sans-serif;
+        }
+
+        /* --- ANIMATIONS --- */
+        @keyframes float {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+            100% { transform: translateY(0px); }
+        }
+
+        @keyframes glow {
+            0% { box-shadow: 0 0 5px rgba(0, 255, 136, 0.2); }
+            50% { box-shadow: 0 0 20px rgba(0, 255, 136, 0.6); }
+            100% { box-shadow: 0 0 5px rgba(0, 255, 136, 0.2); }
+        }
+
+        .hidden {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .show {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* --- NAVBAR --- */
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 5%;
+            position: fixed;
+            width: 100%;
+            background: rgba(7, 14, 23, 0.8);
+            backdrop-filter: blur(12px);
+            border-bottom: 1px solid var(--glass-border);
+            z-index: 1000;
+            transition: 0.3s;
+        }
+
+        .logo {
+            font-size: 24px;
+            font-weight: 800;
+            background: linear-gradient(90deg, var(--neon-green), var(--neon-blue));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            letter-spacing: 1px;
+        }
+
+        nav a {
+            color: var(--text-main);
+            margin-left: 30px;
+            text-decoration: none;
+            font-size: 14px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            transition: 0.3s;
+            position: relative;
+        }
+
+        nav a::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: -5px;
+            left: 0;
+            background-color: var(--neon-green);
+            transition: 0.3s;
+        }
+
+        nav a:hover::after { width: 100%; }
+        nav a:hover { color: var(--neon-green); }
+
+        /* --- HERO --- */
+        .hero {
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            position: relative;
+            background: radial-gradient(circle at center, rgba(0, 184, 255, 0.1) 0%, var(--bg-dark) 70%);
+            padding: 0 20px;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background-image: url('https://images.unsplash.com/photo-1451187580459-43490279c0fa?q=80&w=2072&auto=format&fit=crop');
+            background-size: cover;
+            background-position: center;
+            opacity: 0.15;
+            z-index: -1;
+        }
+
+        .hero h2 {
+            font-size: 64px;
+            font-weight: 800;
+            margin-bottom: 20px;
+            line-height: 1.1;
+            background: linear-gradient(to right, #fff, var(--text-muted));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .hero p {
+            font-size: 20px;
+            color: var(--neon-green);
+            margin-bottom: 40px;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+        }
+
+        .btn {
+            padding: 15px 40px;
+            background: transparent;
+            border: 1px solid var(--neon-green);
+            color: var(--neon-green);
+            font-family: 'Outfit', sans-serif;
+            font-size: 16px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            border-radius: 30px;
+            cursor: pointer;
+            transition: 0.4s;
+            position: relative;
+            overflow: hidden;
+            z-index: 1;
+        }
+
+        .btn::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: var(--neon-green);
+            z-index: -1;
+            transform: scaleX(0);
+            transform-origin: left;
+            transition: 0.4s ease-in-out;
+        }
+
+        .btn:hover::before { transform: scaleX(1); }
+        .btn:hover { color: var(--bg-dark); box-shadow: 0 0 20px rgba(0, 255, 136, 0.4); }
+
+        /* --- SERVICES (GLASSMORPHISM CARDS) --- */
+        .services {
+            padding: 100px 5%;
+            text-align: center;
+        }
+
+        .section-title {
+            font-size: 40px;
+            margin-bottom: 60px;
+            position: relative;
+            display: inline-block;
+        }
+
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 50px;
+            height: 3px;
+            background: var(--neon-green);
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 30px;
+        }
+
+        .card {
+            background: var(--bg-card);
+            backdrop-filter: blur(10px);
+            border: 1px solid var(--glass-border);
+            padding: 40px 30px;
+            border-radius: 20px;
+            transition: 0.4s;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .card i {
+            font-size: 40px;
+            color: var(--neon-blue);
+            margin-bottom: 20px;
+            transition: 0.4s;
+        }
+
+        .card h3 {
+            font-size: 24px;
+            margin-bottom: 15px;
+        }
+
+        .card p {
+            color: var(--text-muted);
+            font-size: 15px;
+            line-height: 1.6;
+        }
+
+        .card:hover {
+            transform: translateY(-10px);
+            border-color: rgba(0, 255, 136, 0.3);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+        }
+
+        .card:hover i {
+            color: var(--neon-green);
+            transform: scale(1.1);
+        }
+
+        /* --- ABOUT --- */
+        .about {
+            padding: 100px 5%;
+            background: linear-gradient(180deg, var(--bg-dark) 0%, rgba(10, 25, 47, 0.4) 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .about-content {
+            max-width: 800px;
+            text-align: center;
+            background: var(--bg-card);
+            backdrop-filter: blur(10px);
+            border: 1px solid var(--glass-border);
+            padding: 60px;
+            border-radius: 20px;
+            box-shadow: inset 0 0 20px rgba(0, 255, 136, 0.05);
+        }
+
+        .about p {
+            font-size: 18px;
+            color: var(--text-muted);
+            line-height: 1.8;
+        }
+
+        .highlight {
+            color: var(--neon-green);
+            font-weight: 600;
+        }
+
+        /* --- FORM --- */
+        .form-section {
+            padding: 100px 5%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        form {
+            width: 100%;
+            max-width: 600px;
+            background: var(--bg-card);
+            padding: 40px;
+            border-radius: 20px;
+            border: 1px solid var(--glass-border);
+        }
+
+        .input-group {
+            position: relative;
+            margin-bottom: 25px;
+        }
+
+        input, select, textarea {
+            width: 100%;
+            padding: 15px 20px;
+            background: rgba(0, 0, 0, 0.3);
+            border: 1px solid var(--glass-border);
+            color: white;
+            border-radius: 10px;
+            font-family: 'Inter', sans-serif;
+            font-size: 15px;
+            transition: 0.3s;
+            outline: none;
+        }
+
+        input:focus, select:focus, textarea:focus {
+            border-color: var(--neon-blue);
+            box-shadow: 0 0 15px rgba(0, 184, 255, 0.2);
+        }
+
+        textarea {
+            min-height: 120px;
+            resize: vertical;
+        }
+
+        select option {
+            background: var(--bg-dark);
+            color: white;
+        }
+
+        /* --- FOOTER --- */
+        footer {
+            text-align: center;
+            padding: 40px 20px;
+            border-top: 1px solid var(--glass-border);
+            background: rgba(0, 0, 0, 0.5);
+        }
+
+        footer p {
+            color: var(--text-muted);
+            font-size: 14px;
+            margin: 5px 0;
+        }
+
+        /* --- WHATSAPP FLOATING BUTTON --- */
+        .whatsapp {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            background: #25D366;
+            width: 60px;
+            height: 60px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            font-size: 30px;
+            color: white;
+            cursor: pointer;
+            box-shadow: 0 4px 15px rgba(37, 211, 102, 0.4);
+            transition: 0.3s;
+            z-index: 1000;
+            animation: float 3s ease-in-out infinite;
+        }
+
+        .whatsapp:hover {
+            transform: scale(1.1);
+            animation: none;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .hero h2 { font-size: 40px; }
+            nav { display: none; /* Add hamburger menu logic here for production */ }
+            .about-content { padding: 40px 20px; }
+        }
+    </style>
+</head>
+<body>
+
+    <header id="header">
+        <div class="logo">EnviroCore.</div>
+        <nav>
+            <a href="#">Home</a>
+            <a href="#services">Expertise</a>
+            <a href="#about">About</a>
+            <a href="#form">Start Project</a>
+        </nav>
+    </header>
+
+    <section class="hero">
+        <div class="hidden">
+            <h2>Engineering a<br>Sustainable Future</h2>
+            <p>Data-Driven Environmental Solutions</p>
+            <button class="btn" onclick="scrollToForm()">Initiate Protocol</button>
+        </div>
+    </section>
+
+    <section class="services" id="services">
+        <h2 class="section-title hidden">Core Expertise</h2>
+        <div class="grid">
+            <div class="card hidden">
+                <i class="fa-solid fa-leaf"></i>
+                <h3>EIA & IEE</h3>
+                <p>Comprehensive Environmental Impact Assessments and Initial Environmental Examinations tailored for compliance and sustainability.</p>
+            </div>
+            <div class="card hidden">
+                <i class="fa-solid fa-clipboard-check"></i>
+                <h3>EMP & ESG</h3>
+                <p>Actionable Environmental Management Plans and deep Environmental, Social & Governance consulting frameworks.</p>
+            </div>
+            <div class="card hidden">
+                <i class="fa-solid fa-cloud-sun"></i>
+                <h3>GHG Auditing</h3>
+                <p>Precision Greenhouse Gas verification, auditing, and reporting to meet global climate benchmarks.</p>
+            </div>
+            <div class="card hidden">
+                <i class="fa-solid fa-compass-drafting"></i>
+                <h3>AutoCAD Design</h3>
+                <p>Technical engineering blueprints, large-scale infrastructure mapping, and wildlife sanctuary development planning.</p>
+            </div>
+        </div>
+    </section>
+
+    <section class="about" id="about">
+        <div class="about-content hidden">
+            <h2 class="section-title">About EnviroCore</h2>
+            <p>
+                Led by <span class="highlight">Engr. Saeed Rehman</span>, EnviroCore Engineering & Management Consultants bridges the gap between infrastructure growth and ecological preservation. With exactly two years of specialized core engineering experience, we deliver cutting-edge technical insights.
+                <br><br>
+                We are proud to serve and deploy sustainable solutions across <span class="highlight">Karachi, Hyderabad, and Thatta</span>.
+            </p>
+        </div>
+    </section>
+
+    <section class="form-section" id="form">
+        <h2 class="section-title hidden">Project Interface</h2>
+        <form id="contactForm" class="hidden">
+            <div class="input-group">
+                <input type="text" placeholder="Full Name" required>
+            </div>
+            <div class="input-group">
+                <input type="text" placeholder="Company / Organization">
+            </div>
+            <div class="input-group">
+                <input type="email" placeholder="Secure Email" required>
+            </div>
+            <div class="input-group">
+                <select required>
+                    <option value="" disabled selected>Select Primary Service</option>
+                    <option value="eia">EIA / IEE / EMP</option>
+                    <option value="esg">ESG Consulting</option>
+                    <option value="ghg">GHG Verification & Auditing</option>
+                    <option value="cad">AutoCAD / Infrastructure Design</option>
+                </select>
+            </div>
+            <div class="input-group">
+                <textarea placeholder="Describe your project parameters..."></textarea>
+            </div>
+            <button class="btn" style="width: 100%;">Transmit Request</button>
+        </form>
+    </section>
+
+    <footer>
+        <p>© 2026 EnviroCore Engineering & Management Consultants</p>
+        <p>Engr. Saeed Rehman | Operating in Karachi, Hyderabad & Thatta</p>
+    </footer>
+
+    <div class="whatsapp" onclick="openWhatsApp()" title="Chat with us">
+        <i class="fa-brands fa-whatsapp"></i>
+    </div>
+
+    <script>
+        // Smooth scroll to form
+        function scrollToForm() {
+            document.getElementById("form").scrollIntoView({ behavior: 'smooth' });
+        }
+
+        // WhatsApp redirect
+        function openWhatsApp() {
+            window.open("https://wa.me/923XXXXXXXXX", "_blank");
+        }
+
+        // Form Submission
+        document.getElementById("contactForm").addEventListener("submit", function(e) {
+            e.preventDefault();
+            // In a real app, this would be an API call
+            const btn = this.querySelector('button');
+            const originalText = btn.innerText;
+            btn.innerText = "Transmitting...";
+            btn.style.color = "var(--bg-dark)";
+            btn.style.background = "var(--neon-green)";
+            
+            setTimeout(() => {
+                alert("Project parameters received successfully. We will be in touch.");
+                btn.innerText = originalText;
+                btn.style.background = "transparent";
+                btn.style.color = "var(--neon-green)";
+                this.reset();
+            }, 1000);
+        });
+
+        // Navbar background on scroll
+        window.addEventListener('scroll', () => {
+            const header = document.getElementById('header');
+            if (window.scrollY > 50) {
+                header.style.background = 'rgba(7, 14, 23, 0.95)';
+                header.style.boxShadow = '0 4px 30px rgba(0, 0, 0, 0.5)';
+            } else {
+                header.style.background = 'rgba(7, 14, 23, 0.8)';
+                header.style.boxShadow = 'none';
+            }
+        });
+
+        // Intersection Observer for scroll animations
+        const observerOptions = {
+            root: null,
+            rootMargin: '0px',
+            threshold: 0.15
+        };
+
+        const observer = new IntersectionObserver((entries, observer) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('show');
+                    observer.unobserve(entry.target); // Only animate once
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.hidden').forEach((el) => {
+            observer.observe(el);
+        });
+    </script>
+</body>
+</html>
