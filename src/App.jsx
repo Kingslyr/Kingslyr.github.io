@@ -7,8 +7,8 @@ import Services from "./components/Services";
 export default function App() {
   return (
     <div className="relative min-h-screen overflow-x-hidden bg-[#071220] text-slate-100">
-      <div className="pointer-events-none fixed inset-0 bg-[url('/1000158519.png1000158519.png')] bg-cover bg-center opacity-35" />
-      <div className="pointer-events-none fixed inset-0 bg-[radial-gradient(circle_at_50%_15%,_rgba(52,211,153,0.28),_transparent_40%),radial-gradient(circle_at_85%_10%,_rgba(250,204,21,0.18),_transparent_30%),radial-gradient(circle_at_15%_80%,_rgba(56,189,248,0.16),_transparent_35%),linear-gradient(to_bottom,_rgba(3,9,20,0.2),_rgba(3,9,20,0.92))]" />
+      <div className="pointer-events-none fixed inset-0 animate-drift bg-[url('/1000158519.png1000158519.png')] bg-cover bg-center opacity-35" />
+      <div className="pointer-events-none fixed inset-0 bg-[radial-gradient(circle_at_50%_15%,_rgba(52,211,153,0.28),_transparent_40%),radial-gradient(circle_at_85%_10%,_rgba(250,204,21,0.2),_transparent_32%),radial-gradient(circle_at_15%_80%,_rgba(56,189,248,0.16),_transparent_35%),linear-gradient(to_bottom,_rgba(3,9,20,0.2),_rgba(3,9,20,0.94))]" />
       <div className="pointer-events-none fixed inset-0 opacity-40 [background-image:radial-gradient(rgba(255,215,140,0.35)_1px,transparent_1px)] [background-size:3px_3px]" />
       <Navbar />
       <main className="relative z-10">
