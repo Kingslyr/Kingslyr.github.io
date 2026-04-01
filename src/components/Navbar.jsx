@@ -4,11 +4,16 @@ export default function Navbar() {
       <div className="mx-auto grid w-full max-w-6xl grid-cols-2 items-center gap-4 md:grid-cols-3">
         <a href="#" className="flex items-center gap-2 justify-self-start">
           <img
-            src="/1000158519.png1000158519.png"
+            src="/1000158519.png"
             alt="EnviroCore logo"
             className="h-12 w-12 shrink-0 rounded-full bg-white p-1 object-contain shadow-[0_0_20px_rgba(52,211,153,0.45)] md:h-14 md:w-14"
           />
-          <span className="text-base font-semibold tracking-[0.08em] text-white">EnviroCore</span>
+          <div className="leading-tight">
+            <span className="block text-base font-semibold tracking-[0.08em] text-white">EnviroCore</span>
+            <span className="block text-[11px] tracking-[0.22em] text-emerald-200/80">
+              Engr Saeed Ur Rehman
+            </span>
+          </div>
         </a>
 
         <div className="col-span-2 hidden items-center justify-center gap-9 text-sm text-white/90 md:col-span-1 md:flex">
