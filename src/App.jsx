@@ -1,72 +1,27 @@
-import React from "react";
-import { Canvas, useFrame } from "@react-three/fiber";
-import { OrbitControls } from "@react-three/drei";
-
-function Globe() {
-  return (
-    <mesh rotation={[0.3, 0.5, 0]}>
-      <sphereGeometry args={[2, 64, 64]} />
-      <meshBasicMaterial wireframe color="#00ff88" />
-    </mesh>
-  );
-}
+import Hero from "./components/Hero";
+import EcoScene from "./components/EcoScene";
+import Stats from "./components/Stats";
+import Contact from "./components/Contact";
+import Navbar from "./components/Navbar";
+import Services from "./components/Services";
 
 export default function App() {
   return (
-    <div style={{ background: "black", color: "white" }}>
-      
-      {/* HERO */}
-      <section style={{ height: "100vh", position: "relative" }}>
-        <Canvas camera={{ position: [0, 0, 6] }}>
-          <ambientLight />
-          <Globe />
-          <OrbitControls autoRotate enableZoom={false} />
-        </Canvas>
+    <div className="relative min-h-screen bg-slate-950 text-slate-100">
+      <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_top,_rgba(34,197,94,0.25),_transparent_50%),radial-gradient(circle_at_80%_20%,_rgba(56,189,248,0.2),_transparent_45%)]" />
+      <Navbar />
+      <main className="relative">
+        <Hero />
+        <EcoScene />
+        <Stats />
+        <Services />
+        <Contact />
+      </main>
 
-        <div style={{
-          position: "absolute",
-          top: "50%",
-          left: "50%",
-          transform: "translate(-50%, -50%)",
-          textAlign: "center"
-        }}>
-          <h1>EnviroCore</h1>
-          <p style={{ color: "#00ff88" }}>
-            Sustainable Solutions for a Greener Future
-          </p>
-        </div>
-      </section>
-
-      {/* STATS */}
-      <section style={{ textAlign: "center", padding: "40px" }}>
-        <h2>15+ Projects Completed</h2>
-        <h2>5+ Years Experience</h2>
-        <h2>Sindh Region Active</h2>
-      </section>
-
-      {/* CONTACT */}
-      <section style={{ padding: "40px", textAlign: "center" }}>
-        <form action="https://formspree.io/f/mzdkbpep" method="POST">
-          <input placeholder="Name" name="name" required /><br/><br/>
-          <input placeholder="Email" name="email" required /><br/><br/>
-          <textarea placeholder="Project Description" name="message" /><br/><br/>
-          <button type="submit">Send</button>
-        </form>
-      </section>
-
-      {/* WHATSAPP */}
       <a
         href="https://wa.me/923362171881?text=Hello%20EnviroCore%2C%20I%20need%20EIA%20services"
-        style={{
-          position: "fixed",
-          bottom: "20px",
-          right: "20px",
-          background: "#25D366",
-          padding: "15px",
-          borderRadius: "50%",
-          color: "white",
-          textDecoration: "none"
-        }}
+        className="glow fixed bottom-6 right-6 rounded-full bg-emerald-500 px-4 py-3 text-xl text-black transition hover:scale-105"
+        aria-label="Chat on WhatsApp"
       >
         💬
       </a>

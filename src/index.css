@@ -1,0 +1,14 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Global styling */
+body {
+  background: #070e17;
+  color: white;
+  font-family: "Inter", sans-serif;
+}
+
+.glow {
+  box-shadow: 0 0 20px rgba(0, 255, 136, 0.4);
+}
