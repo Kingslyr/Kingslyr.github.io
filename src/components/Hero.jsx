@@ -24,9 +24,12 @@ export default function Hero() {
           Sustainable Solutions for a Greener Future
         </p>
 
-        <button className="glow mt-6 rounded-full border border-green-400 px-6 py-3 transition hover:bg-green-400 hover:text-black">
+        <a
+          href="#contact"
+          className="glow mt-6 rounded-full border border-green-400 px-6 py-3 transition hover:bg-green-400 hover:text-black"
+        >
           Start Project
-        </button>
+        </a>
       </div>
     </section>
   );

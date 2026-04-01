@@ -1,6 +1,6 @@
 export default function Contact() {
   return (
-    <section className="mx-auto w-full max-w-3xl px-6 py-16 text-center">
+    <section id="contact" className="mx-auto w-full max-w-3xl px-6 py-16 text-center scroll-mt-24">
       <form
         action="https://formspree.io/f/mzdkbpep"
         method="POST"
