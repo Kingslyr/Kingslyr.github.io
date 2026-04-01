@@ -6,7 +6,7 @@ export default function Navbar() {
           <img
             src="/1000158519.png1000158519.png"
             alt="EnviroCore logo"
-            className="h-9 w-9 rounded-md object-cover shadow-[0_0_20px_rgba(52,211,153,0.45)]"
+            className="h-12 w-12 shrink-0 rounded-full bg-white p-1 object-contain shadow-[0_0_20px_rgba(52,211,153,0.45)] md:h-14 md:w-14"
           />
           <span className="text-base font-semibold tracking-[0.08em] text-white">EnviroCore</span>
         </a>
