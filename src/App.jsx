@@ -6,24 +6,25 @@ import Services from "./components/Services";
 
 export default function App() {
   return (
-    <div className="relative min-h-screen overflow-x-hidden bg-slate-950 text-slate-100">
-      <div className="pointer-events-none fixed inset-0 bg-[url('/1000158519.png1000158519.png')] bg-cover bg-center opacity-30" />
-      <div className="pointer-events-none fixed inset-0 bg-[radial-gradient(circle_at_50%_15%,_rgba(47,209,167,0.25),_transparent_45%),radial-gradient(circle_at_80%_70%,_rgba(249,201,74,0.12),_transparent_35%),linear-gradient(to_bottom,_rgba(3,10,22,0.35),_rgba(3,10,22,0.92))]" />
+    <div className="relative min-h-screen overflow-x-hidden bg-[#071220] text-slate-100">
+      <div className="pointer-events-none fixed inset-0 bg-[url('/1000158519.png1000158519.png')] bg-cover bg-center opacity-35" />
+      <div className="pointer-events-none fixed inset-0 bg-[radial-gradient(circle_at_50%_15%,_rgba(52,211,153,0.28),_transparent_40%),radial-gradient(circle_at_85%_10%,_rgba(250,204,21,0.18),_transparent_30%),radial-gradient(circle_at_15%_80%,_rgba(56,189,248,0.16),_transparent_35%),linear-gradient(to_bottom,_rgba(3,9,20,0.2),_rgba(3,9,20,0.92))]" />
+      <div className="pointer-events-none fixed inset-0 opacity-40 [background-image:radial-gradient(rgba(255,215,140,0.35)_1px,transparent_1px)] [background-size:3px_3px]" />
       <Navbar />
       <main className="relative z-10">
         <Hero />
-        <section id="about" className="mx-auto w-full max-w-6xl px-6 py-10">
+        <Contact />
+        <section id="about" className="mx-auto w-full max-w-6xl px-6 py-16">
           <EcoScene />
         </section>
-        <section id="services" className="mx-auto w-full max-w-6xl px-6 py-14">
+        <section id="services" className="mx-auto w-full max-w-6xl px-6 pb-20 pt-4">
           <Services />
         </section>
-        <Contact />
       </main>
 
       <a
         href="https://wa.me/923362171881?text=Hello%20EnviroCore%2C%20I%20need%20EIA%20services"
-        className="glow fixed bottom-6 right-6 z-30 rounded-full bg-[#25D366] px-4 py-3 text-xl text-black transition hover:scale-105"
+        className="glow fixed bottom-6 right-6 z-30 rounded-full bg-[#25D366] px-4 py-3 text-xl text-black transition hover:scale-105 hover:shadow-[0_0_40px_rgba(37,211,102,0.85)]"
         aria-label="Chat on WhatsApp"
       >
         💬
