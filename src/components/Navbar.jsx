@@ -10,7 +10,7 @@ export default function Navbar() {
           />
           <div className="leading-tight">
             <span className="block text-base font-semibold tracking-[0.08em] text-white">EnviroCore</span>
-            <span className="block text-[11px] tracking-[0.22em] text-emerald-200/80">
+            <span className="block text-xs font-medium text-white/90 sm:text-sm">
               Engr Saeed Ur Rehman
             </span>
           </div>
@@ -29,6 +29,9 @@ export default function Navbar() {
           Get a Quote
         </a>
       </div>
+      <p className="mx-auto mt-2 max-w-6xl text-center text-xs font-medium text-emerald-100/90 sm:text-sm">
+        Engr Saeed Ur Rehman
+      </p>
     </nav>
   );
 }
