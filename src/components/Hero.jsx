@@ -7,14 +7,15 @@ export default function Hero() {
   return (
     <section className="relative min-h-[92svh] overflow-hidden">
       <Canvas camera={{ position: [0, 0, 8] }} style={{ position: "absolute", inset: 0 }}>
-        <ambientLight intensity={0.4} />
-        <directionalLight position={[5, 3, 5]} intensity={2} />
-        <pointLight position={[-5, -3, -5]} intensity={1.5} color="#00ff88" />
+        <ambientLight intensity={0.65} />
+        <directionalLight position={[5, 3, 5]} intensity={2.2} />
+        <pointLight position={[-5, -3, -5]} intensity={1.8} color="#00ff88" />
+        <pointLight position={[0, 2, 6]} intensity={0.9} color="#9bd8ff" />
         <Globe />
         <OrbitControls autoRotate enableZoom={false} />
       </Canvas>
 
-      <div className="absolute inset-0 z-10 bg-black/55" />
+      <div className="absolute inset-0 z-10 bg-black/42" />
       <div className="absolute inset-0 z-10 bg-[radial-gradient(circle_at_50%_35%,_rgba(255,255,255,0.12),_transparent_45%)]" />
 
       <div className="absolute inset-0 z-20 mx-auto flex w-full max-w-6xl flex-col items-center justify-center px-6 text-center animate-rise">

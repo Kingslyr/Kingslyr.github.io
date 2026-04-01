@@ -16,7 +16,13 @@ export default function Globe() {
     <group>
       <mesh ref={ref}>
         <sphereGeometry args={[2, 64, 64]} />
-        <meshStandardMaterial map={texture} roughness={0.7} metalness={0.2} />
+        <meshStandardMaterial
+          map={texture}
+          roughness={0.65}
+          metalness={0.15}
+          emissive="#0f3b2b"
+          emissiveIntensity={0.18}
+        />
       </mesh>
 
       <mesh scale={2.1}>
