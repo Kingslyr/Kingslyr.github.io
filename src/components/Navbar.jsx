@@ -29,9 +29,11 @@ export default function Navbar() {
           Get a Quote
         </a>
       </div>
-      <p className="mx-auto mt-2 max-w-6xl text-center text-xs font-medium text-emerald-100/90 sm:text-sm">
-        Engr Saeed Ur Rehman
-      </p>
+      <div className="mx-auto mt-2 flex max-w-6xl justify-center">
+        <p className="rounded-full border border-emerald-200/35 bg-black/45 px-4 py-1 text-center text-sm font-semibold text-emerald-100 sm:text-base">
+          Engr Saeed Ur Rehman
+        </p>
+      </div>
     </nav>
   );
 }
