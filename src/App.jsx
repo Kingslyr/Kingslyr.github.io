@@ -28,7 +28,7 @@ export default function App() {
       <div className="pointer-events-none fixed inset-0 bg-[radial-gradient(circle_at_50%_15%,_rgba(52,211,153,0.28),_transparent_40%),radial-gradient(circle_at_85%_10%,_rgba(250,204,21,0.2),_transparent_32%),radial-gradient(circle_at_15%_80%,_rgba(56,189,248,0.16),_transparent_35%),linear-gradient(to_bottom,_rgba(3,9,20,0.2),_rgba(3,9,20,0.94))]" />
       <div className="pointer-events-none fixed inset-0 opacity-40 [background-image:radial-gradient(rgba(255,215,140,0.35)_1px,transparent_1px)] [background-size:3px_3px]" />
       <Navbar />
-      <Suspense fallback={<Loader />}>
+      <Suspense fallback={null}>
         <main className="relative z-10">
           <Hero />
           <Contact />
