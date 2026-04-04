@@ -4,7 +4,9 @@ import './Navbar.css';
 const Navbar = () => {
   return (
     <nav className="navbar">
-      <div className="navbar-logo">Logo</div>
+      <div className="navbar-logo">
+        <img src="/1000158519.png" alt="Logo" style={{ height: '48px', width: 'auto' }} />
+      </div>
       <div className="navbar-center">
         <h1>Sustainable Solutions for a Greener Future. Building resilient environmental systems with data-driven precision.</h1>
       </div>
