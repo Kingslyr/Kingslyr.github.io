@@ -13,10 +13,16 @@ export default function Navbar() {
           </div>
         </a>
 
-        <div className="col-span-2 hidden items-center justify-center gap-9 text-sm text-white/90 md:col-span-1 md:flex">
-          <a href="#about" className="transition hover:text-emerald-300">About</a>
-          <a href="#services" className="transition hover:text-emerald-300">Services</a>
-          <a href="#contact" className="transition hover:text-emerald-300">Contact</a>
+        <div className="col-span-2 hidden flex-col items-center justify-center gap-1 md:col-span-1 md:flex">
+          <p className="text-center text-xs text-emerald-300/80 italic" role="doc-subtitle">
+            Sustainable Solutions for a Greener Future.{" "}
+            Building resilient environmental systems with data-driven precision.
+          </p>
+          <div className="flex items-center gap-9 text-sm text-white/90">
+            <a href="#about" className="transition hover:text-emerald-300">About</a>
+            <a href="#services" className="transition hover:text-emerald-300">Services</a>
+            <a href="#contact" className="transition hover:text-emerald-300">Contact</a>
+          </div>
         </div>
 
         <a
