@@ -5,7 +5,7 @@ const Navbar = () => {
   return (
     <nav className="navbar">
       <div className="navbar-logo">
-        <img src="/1000158519.png" alt="Logo" style={{ height: '48px', width: 'auto' }} />
+        <img src="/1000158519.png" alt="Logo" className="h-12 w-auto" />
       </div>
       <div className="navbar-center">
         <h1>Sustainable Solutions for a Greener Future. Building resilient environmental systems with data-driven precision.</h1>
