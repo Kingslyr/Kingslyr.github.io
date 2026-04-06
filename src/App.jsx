@@ -7,11 +7,15 @@ const EcoScene = lazy(() => import("./components/EcoScene"));
 const Contact = lazy(() => import("./components/Contact"));
 const Services = lazy(() => import("./components/Services"));
 
+const VISITED_KEY = "visited";
+
 export default function App() {
-  const [showIntro, setShowIntro] = useState(true);
+  const [showIntro, setShowIntro] = useState(() => !localStorage.getItem(VISITED_KEY));
 
   useEffect(() => {
+    if (!showIntro) return;
     const timer = window.setTimeout(() => {
+      localStorage.setItem(VISITED_KEY, "1");
       setShowIntro(false);
     }, 1700);
 
