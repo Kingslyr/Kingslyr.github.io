@@ -1,122 +1,78 @@
-import { useEffect, useRef } from "react";
+import { useEffect, useState } from "react";
+
+const stages = [
+  {
+    title: "Exploded Infrastructure View",
+    text: "Scroll-triggered layer separation for pipes, mangrove belts, and energy grid systems.",
+  },
+  {
+    title: "Environmental Data Overlay",
+    text: "Real-time color states mapped to carbon, biodiversity, and compliance metrics.",
+  },
+  {
+    title: "Liquid Scene Transition",
+    text: "GLSL-style melt and glitch transition between EIA, ESG, and restoration modules.",
+  },
+];
 
 export default function EcoScene() {
-  const ref = useRef();
+  const [scrollProgress, setScrollProgress] = useState(0);
 
   useEffect(() => {
-    const canvas = ref.current;
-    if (!canvas) {
-      return;
-    }
-
-    const ctx = canvas.getContext("2d");
-    if (!ctx) {
-      return;
-    }
-
-    const setCanvasSize = () => {
-      canvas.width = window.innerWidth;
-      canvas.height = 300;
+    const onScroll = () => {
+      const max = Math.max(document.body.scrollHeight - window.innerHeight, 1);
+      setScrollProgress(Math.min(window.scrollY / max, 1));
     };
 
-    setCanvasSize();
-    window.addEventListener("resize", setCanvasSize);
+    onScroll();
+    window.addEventListener("scroll", onScroll, { passive: true });
 
-    let t = 0;
-    let frameId;
-
-    const trees = Array.from({ length: 9 }, (_, i) => ({
-      baseX: i * 170 + 60,
-      scale: 0.75 + (i % 3) * 0.18,
-      swayOffset: i * 0.6,
-    }));
-
-    const drawTree = (x, y, scale, sway) => {
-      const trunkW = 8 * scale;
-      const trunkH = 46 * scale;
-
-      ctx.fillStyle = "#5a3a1a";
-      ctx.fillRect(x - trunkW / 2 + sway * 1.2, y - trunkH, trunkW, trunkH);
-
-      const layers = [
-        { w: 62, h: 35, offsetY: 52, color: "#1f6c45" },
-        { w: 50, h: 30, offsetY: 38, color: "#238451" },
-        { w: 38, h: 26, offsetY: 24, color: "#2c975a" },
-      ];
-
-      layers.forEach((layer) => {
-        ctx.beginPath();
-        ctx.moveTo(x + sway * 2, y - layer.offsetY * scale);
-        ctx.lineTo(x - (layer.w / 2) * scale + sway * 2, y - (layer.offsetY - layer.h) * scale);
-        ctx.lineTo(x + (layer.w / 2) * scale + sway * 2, y - (layer.offsetY - layer.h) * scale);
-        ctx.closePath();
-        ctx.fillStyle = layer.color;
-        ctx.fill();
-      });
-    };
-
-    const draw = () => {
-      ctx.clearRect(0, 0, canvas.width, canvas.height);
-
-      const sky = ctx.createLinearGradient(0, 0, 0, canvas.height);
-      sky.addColorStop(0, "#091521");
-      sky.addColorStop(1, "#112132");
-      ctx.fillStyle = sky;
-      ctx.fillRect(0, 0, canvas.width, canvas.height);
-
-      ctx.beginPath();
-      for (let x = 0; x <= canvas.width; x += 2) {
-        const y = 215 + Math.sin(x * 0.004 + t * 0.5) * 18;
-        if (x === 0) {
-          ctx.moveTo(x, y);
-        } else {
-          ctx.lineTo(x, y);
-        }
-      }
-      ctx.lineTo(canvas.width, canvas.height);
-      ctx.lineTo(0, canvas.height);
-      ctx.closePath();
-      ctx.fillStyle = "rgba(15, 45, 35, 0.9)";
-      ctx.fill();
-
-      ctx.beginPath();
-      for (let x = 0; x <= canvas.width; x += 2) {
-        const y = 165 + Math.sin(x * 0.01 + t) * 16;
-        if (x === 0) {
-          ctx.moveTo(x, y);
-        } else {
-          ctx.lineTo(x, y);
-        }
-      }
-      ctx.lineWidth = 2;
-      ctx.strokeStyle = "rgba(79, 255, 173, 0.75)";
-      ctx.stroke();
-
-      trees.forEach((tree) => {
-        const x = tree.baseX % (canvas.width + 80);
-        const sway = Math.sin(t * 1.2 + tree.swayOffset) * 1.8;
-        drawTree(x, 212 + Math.sin(t * 0.8 + tree.swayOffset) * 2, tree.scale, sway);
-      });
-
-      const haze = ctx.createLinearGradient(0, 120, 0, canvas.height);
-      haze.addColorStop(0, "rgba(10, 18, 24, 0)");
-      haze.addColorStop(1, "rgba(5, 10, 14, 0.45)");
-      ctx.fillStyle = haze;
-      ctx.fillRect(0, 120, canvas.width, canvas.height - 120);
-
-      t += 0.02;
-      frameId = requestAnimationFrame(draw);
-    };
-
-    draw();
-
-    return () => {
-      if (frameId) {
-        cancelAnimationFrame(frameId);
-      }
-      window.removeEventListener("resize", setCanvasSize);
-    };
+    return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
-  return <canvas ref={ref} style={{ width: "100%" }} />;
+  return (
+    <section className="rounded-3xl border border-emerald-300/20 bg-[linear-gradient(140deg,rgba(8,16,26,0.9),rgba(6,36,31,0.62),rgba(11,16,29,0.92))] p-6 shadow-[0_30px_90px_rgba(0,0,0,0.5)] backdrop-blur-xl md:p-10">
+      <div className="grid gap-8 lg:grid-cols-[1.3fr_0.9fr]">
+        <div>
+          <p className="text-sm tracking-[0.3em] text-emerald-200/80">IMMERSIVE ENGINEERING FLOW</p>
+          <h2 className="mt-3 text-3xl font-semibold text-white md:text-4xl">Interactive Sanctuary Fly-through</h2>
+          <p className="mt-4 max-w-2xl text-white/75">
+            This control layer turns your AutoCAD ecosystem model into a guided cinematic experience. As users move and scroll, infrastructure systems split, data pulses in real time, and modules transition with fluid distortion.
+          </p>
+
+          <div className="mt-7 space-y-3">
+            {stages.map((stage, index) => (
+              <article
+                key={stage.title}
+                className="rounded-2xl border border-white/15 bg-black/35 p-4 shadow-[0_18px_40px_rgba(0,0,0,0.35)]"
+              >
+                <p className="text-xs tracking-[0.2em] text-emerald-300/80">PHASE 0{index + 1}</p>
+                <h3 className="mt-1 text-lg font-semibold text-white">{stage.title}</h3>
+                <p className="mt-2 text-sm text-white/70">{stage.text}</p>
+              </article>
+            ))}
+          </div>
+        </div>
+
+        <div className="rounded-2xl border border-white/20 bg-black/40 p-5">
+          <h3 className="text-sm tracking-[0.25em] text-emerald-300/80">RESTORATION INDEX</h3>
+          <p className="mt-3 text-5xl font-bold text-emerald-300">{Math.round(42 + scrollProgress * 58)}%</p>
+          <p className="mt-2 text-sm text-white/70">Dynamic confidence score based on user progression through the model narrative.</p>
+
+          <div className="mt-6 overflow-hidden rounded-full border border-emerald-300/30 bg-emerald-900/30 p-1">
+            <div
+              className="h-2 rounded-full bg-gradient-to-r from-emerald-300 via-cyan-300 to-emerald-500 transition-[width] duration-300"
+              style={{ width: `${Math.round(20 + scrollProgress * 80)}%` }}
+            />
+          </div>
+
+          <div className="mt-6 space-y-3 text-sm text-white/75">
+            <p className="rounded-xl border border-white/15 bg-black/35 px-3 py-2">GHG Verification: {Math.round(61 + scrollProgress * 34)} / 100</p>
+            <p className="rounded-xl border border-white/15 bg-black/35 px-3 py-2">Mangrove Belt Integrity: {Math.round(54 + scrollProgress * 42)} / 100</p>
+            <p className="rounded-xl border border-white/15 bg-black/35 px-3 py-2">Infrastructure Readiness: {Math.round(49 + scrollProgress * 45)} / 100</p>
+          </div>
+        </div>
+      </div>
+    </section>
+  );
 }
