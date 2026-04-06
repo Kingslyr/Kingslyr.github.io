@@ -14,7 +14,7 @@ export default function Navbar() {
       className={`fixed inset-x-0 top-0 z-50 transition-all duration-300 ${
         scrolled
           ? "bg-[#071220]/90 shadow-[0_2px_20px_rgba(0,0,0,0.5)] backdrop-blur-md"
-          : "bg-transparent"
+          : "bg-[#071220]/45 backdrop-blur-sm"
       }`}
     >
       <nav className="mx-auto flex max-w-7xl items-center justify-between px-6 py-4">
@@ -23,7 +23,7 @@ export default function Navbar() {
           <img
             src="/1000158519.png"
             alt="EnviroCore logo"
-            className="h-10 w-10 rounded-full object-cover"
+            className="h-10 w-10 rounded-full object-cover mix-blend-multiply contrast-125 saturate-150"
           />
           <span className="text-xl font-bold tracking-wide text-white">
             EnviroCore

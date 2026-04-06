@@ -7,6 +7,9 @@ export default function Globe() {
   const nodeRefs = useRef([]);
   const texture = useLoader(THREE.TextureLoader, "/earth.jpg");
 
+  texture.colorSpace = THREE.SRGBColorSpace;
+  texture.anisotropy = 8;
+
   const network = useMemo(() => {
     const latLngToVec3 = (lat, lng, radius = 2.06) => {
       const phi = (90 - lat) * (Math.PI / 180);
@@ -45,7 +48,8 @@ export default function Globe() {
 
   useFrame(({ clock }) => {
     if (ref.current) {
-      ref.current.rotation.y += 0.0015;
+      ref.current.rotation.y += 0.001;
+      ref.current.rotation.x = Math.sin(clock.elapsedTime * 0.12) * 0.06;
     }
 
     const t = clock.getElapsedTime();
@@ -62,12 +66,16 @@ export default function Globe() {
     <group ref={ref}>
       <mesh>
         <sphereGeometry args={[2, 64, 64]} />
-        <meshStandardMaterial
+        <meshPhysicalMaterial
           map={texture}
-          roughness={0.65}
-          metalness={0.15}
-          emissive="#0f3b2b"
-          emissiveIntensity={0.18}
+          roughness={0.8}
+          metalness={0.05}
+          clearcoat={0.2}
+          clearcoatRoughness={0.7}
+          sheen={0.35}
+          sheenColor="#8ed1ff"
+          emissive="#09221a"
+          emissiveIntensity={0.14}
         />
       </mesh>
 
@@ -97,16 +105,6 @@ export default function Globe() {
           <meshBasicMaterial color="#7dffd0" />
         </mesh>
       ))}
-
-      <mesh scale={2.1}>
-        <sphereGeometry args={[2, 64, 64]} />
-        <meshBasicMaterial
-          color="#00ff88"
-          transparent
-          opacity={0.16}
-          blending={THREE.AdditiveBlending}
-        />
-      </mesh>
     </group>
   );
 }

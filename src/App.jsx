@@ -36,10 +36,10 @@ export default function App() {
         <main className="relative z-10">
           <Hero />
           <Contact />
-          <section id="about" className="mx-auto w-full max-w-6xl px-6 py-16">
+          <section id="about" className="mx-auto w-full max-w-6xl scroll-mt-28 px-6 py-16">
             <EcoScene />
           </section>
-          <section id="services" className="mx-auto w-full max-w-6xl px-6 pb-20 pt-4">
+          <section id="services" className="mx-auto w-full max-w-6xl scroll-mt-28 px-6 pb-20 pt-4">
             <Services />
           </section>
         </main>
