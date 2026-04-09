@@ -3,9 +3,9 @@ export default function Stats() {
     <section className="rounded-2xl border border-white/20 bg-black/35 px-4 py-4 shadow-[0_25px_55px_rgba(0,0,0,0.45)] backdrop-blur-md md:px-8 md:py-6">
       <div className="grid grid-cols-1 text-center sm:grid-cols-3">
         {[
-          ["15+", "Projects Completed"],
-          ["5+", "Years Experience"],
-          ["Sindh", "Region Active"],
+          ["50+", "EIA / IEE Projects"],
+          ["20+", "Audits & ESG Reports"],
+          ["Pakistan", "Field Coverage"],
         ].map((item, index) => (
           <div
             key={item[1]}

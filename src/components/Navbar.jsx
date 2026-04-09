@@ -21,9 +21,9 @@ export default function Navbar() {
         {/* Logo */}
         <a href="#" className="flex items-center gap-3">
           <img
-            src="/1000158519.png"
+            src="/envirocore-logo-transparent.png"
             alt="EnviroCore logo"
-            className="h-10 w-10 rounded-full object-cover mix-blend-multiply contrast-125 saturate-150"
+            className="h-11 w-11 object-contain drop-shadow-[0_2px_8px_rgba(0,0,0,0.35)]"
           />
           <span className="text-xl font-bold tracking-wide text-white">
             EnviroCore
@@ -49,7 +49,7 @@ export default function Navbar() {
           href="#contact"
           className="rounded-full bg-emerald-500 px-5 py-2 text-sm font-semibold text-black transition hover:bg-emerald-400 hover:shadow-[0_0_20px_rgba(52,211,153,0.5)]"
         >
-          Get a Quote
+          Request Proposal
         </a>
       </nav>
     </header>

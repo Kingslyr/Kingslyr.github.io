@@ -35,13 +35,13 @@ export default function App() {
       <Suspense fallback={null}>
         <main className="relative z-10">
           <Hero />
-          <Contact />
           <section id="about" className="mx-auto w-full max-w-6xl scroll-mt-28 px-6 py-16">
             <EcoScene />
           </section>
           <section id="services" className="mx-auto w-full max-w-6xl scroll-mt-28 px-6 pb-20 pt-4">
             <Services />
           </section>
+          <Contact />
         </main>
       </Suspense>
 

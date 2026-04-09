@@ -1,24 +1,24 @@
 export default function Services() {
   const items = [
     {
-      title: "Environmental Impact Assessment",
-      text: "Complete EIA workflows from baseline surveys to regulatory-ready documentation.",
+      title: "Environmental Impact Assessment (EIA)",
+      text: "Baseline studies, impact prediction, mitigation planning, and regulatory submission support.",
     },
     {
-      title: "Compliance Strategy",
-      text: "Regional compliance plans that reduce risk and accelerate project approvals.",
+      title: "Initial Environmental Examination (IEE)",
+      text: "Project screening, scoping, and concise environmental review for approvals and due diligence.",
     },
     {
-      title: "Sustainability Intelligence",
-      text: "Data-driven environmental planning for long-term performance and resilience.",
+      title: "Environmental Audit & ESG Advisory",
+      text: "Audit readiness, compliance checks, ESG disclosures, and sustainability roadmaps for business resilience.",
     },
   ];
 
   return (
     <section className="rounded-3xl border border-white/20 bg-white/10 p-8 shadow-[0_30px_70px_rgba(0,0,0,0.4)] backdrop-blur-2xl md:p-10">
-      <h2 className="text-center text-3xl font-semibold text-white md:text-4xl">Services</h2>
+      <h2 className="text-center text-3xl font-semibold text-white md:text-4xl">Our Services</h2>
       <p className="mx-auto mt-4 max-w-3xl text-center text-white/80">
-        Built for organizations that need environmental responsibility and execution speed.
+        We help developers, industries, and institutions manage environmental approvals, compliance, and ESG performance with practical fieldwork and clear reporting.
       </p>
 
       <div className="mt-8 grid gap-4 md:grid-cols-3">
