@@ -31,13 +31,13 @@ export default function EcoScene() {
   }, []);
 
   return (
-    <section className="rounded-3xl border border-emerald-300/20 bg-[linear-gradient(140deg,rgba(8,16,26,0.9),rgba(6,36,31,0.62),rgba(11,16,29,0.92))] p-6 shadow-[0_30px_90px_rgba(0,0,0,0.5)] backdrop-blur-xl md:p-10">
+    <section className="rounded-3xl border border-emerald-300/20 bg-[linear-gradient(140deg,rgba(8,16,26,0.9),rgba(6,36,31,0.62),rgba(11,16,29,0.92))] p-6 shadow-[0_30px_90px_rgba(0,0,0,0.5)] backdrop-blur-md">
       <div className="grid gap-8 lg:grid-cols-[1.3fr_0.9fr]">
         <div>
           <p className="text-sm tracking-[0.3em] text-emerald-200/80">ENVIRONMENTAL COMPLIANCE SERVICES</p>
           <h2 className="mt-3 text-3xl font-semibold text-white md:text-4xl">EIA, IEE, Audit & ESG Support</h2>
           <p className="mt-4 max-w-2xl text-white/75">
-            EnviroCore provides practical environmental consultancy for project approvals, audits, and sustainability performance. We combine fieldwork, technical reporting, and compliance strategy to help your projects move forward responsibly.
+            EnviroCore provides practical environmental consultancy for project approvals, audits, and sustainability performance. We combine fieldwork, technical reporting, and compliance strategy.
           </p>
 
           <div className="mt-7 space-y-3">

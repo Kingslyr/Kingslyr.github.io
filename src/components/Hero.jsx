@@ -61,7 +61,7 @@ export default function Hero() {
                 <ellipse cx="446" cy="74" rx="24" ry="17" />
               </g>
 
-              <path d="M56 86V132M82 84V132M104 82V132M124 86V132M166 82V132M194 78V132M220 82V132M246 80V132M272 78V132M298 82V132M324 86V132M354 82V132M382 80V132M408 84V132M438 88V132" stroke="url(#trunkShade)" strokeWidth="3" strokeLinecap="round" />
+              <path d="M56 86V132M82 84V132M104 82V132M124 86V132M166 82V132M194 78V132M220 82V132M246 80V132M272 78V132M298 82V132M324 86V132M354 82V132M382 80V132M408 84V132M438 88V132" stroke="url(#trunkShade)" strokeWidth="2.2" strokeLinecap="round" />
 
               <g stroke="currentColor" strokeOpacity="0.7" strokeWidth="2.1" strokeLinecap="round">
                 <path d="M82 132L68 146M82 132L78 150M82 132L94 147" />
