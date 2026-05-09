@@ -1,31 +1,333 @@
-.App {
-  text-align: center;
+.page-shell {
+  min-height: 100vh;
+  background:
+    radial-gradient(circle at top left, rgba(118, 190, 160, 0.24), transparent 28%),
+    radial-gradient(circle at bottom right, rgba(25, 63, 55, 0.35), transparent 22%),
+    linear-gradient(180deg, #091714 0%, #0c1f1a 45%, #111715 100%);
+  color: #f3f7f2;
 }
 
-.App-logo {
-  height: 40vmin;
+.envirocore-site {
+  width: min(1120px, calc(100% - 32px));
+  margin: 0 auto;
+  padding: 24px 0 56px;
+}
+
+.hero-card,
+.content-section,
+.contact-section {
+  border: 1px solid rgba(224, 243, 232, 0.12);
+  background: rgba(8, 20, 18, 0.68);
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.28);
+  backdrop-filter: blur(18px);
+}
+
+.hero-card {
+  border-radius: 32px;
+  padding: 28px;
+}
+
+.topbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  margin-bottom: 44px;
+}
+
+.eyebrow {
+  margin: 0 0 10px;
+  text-transform: uppercase;
+  letter-spacing: 0.18em;
+  font-size: 0.75rem;
+  color: #9bd3b5;
+}
+
+.brand-note,
+.lede,
+.feature-card p,
+.hero-panel p,
+.timeline-card p,
+.contact-section p {
+  color: rgba(243, 247, 242, 0.78);
+  line-height: 1.65;
+}
+
+.ghost-link,
+.primary-button,
+.secondary-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 999px;
+  padding: 0.9rem 1.35rem;
+  text-decoration: none;
+  font-weight: 700;
+  transition:
+    transform 160ms ease,
+    border-color 160ms ease,
+    background-color 160ms ease;
+}
+
+.ghost-link,
+.secondary-button {
+  border: 1px solid rgba(230, 245, 234, 0.18);
+  color: #eff7ef;
+  background: rgba(255, 255, 255, 0.03);
+}
+
+.primary-button {
+  background: linear-gradient(135deg, #a4f0c6 0%, #74c9a3 100%);
+  color: #0b1a17;
+}
+
+.ghost-link:hover,
+.primary-button:hover,
+.secondary-button:hover {
+  transform: translateY(-1px);
+}
+
+.hero-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1.2fr) minmax(280px, 0.8fr);
+  gap: 24px;
+  align-items: stretch;
+}
+
+.hero-copy h1,
+.section-heading h2,
+.contact-section h2,
+.hero-panel h2 {
+  margin: 0;
+  line-height: 1.05;
+  letter-spacing: -0.04em;
+}
+
+.hero-copy h1 {
+  max-width: 11ch;
+  font-size: clamp(3rem, 6vw, 5.5rem);
+}
+
+.lede {
+  max-width: 60ch;
+  font-size: 1.05rem;
+  margin: 20px 0 0;
+}
+
+.hero-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-top: 28px;
+}
+
+.metric-row {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 14px;
+  margin-top: 32px;
+}
+
+.metric-card,
+.feature-card,
+.hero-panel,
+.timeline-card {
+  border: 1px solid rgba(229, 247, 233, 0.1);
+  border-radius: 24px;
+  background: rgba(255, 255, 255, 0.03);
+}
+
+.metric-card {
+  padding: 18px;
+}
+
+.metric-card strong {
+  display: block;
+  font-size: 1.9rem;
+  margin-bottom: 8px;
+}
+
+.metric-card span {
+  color: rgba(243, 247, 242, 0.72);
+  line-height: 1.5;
+}
+
+.hero-panel {
+  position: relative;
+  overflow: hidden;
+  padding: 28px;
+  min-height: 100%;
+}
+
+.panel-orb {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(8px);
   pointer-events: none;
 }
 
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
+.panel-orb-one {
+  width: 190px;
+  height: 190px;
+  top: -60px;
+  right: -40px;
+  background: rgba(132, 224, 171, 0.24);
+}
+
+.panel-orb-two {
+  width: 140px;
+  height: 140px;
+  bottom: -35px;
+  left: -30px;
+  background: rgba(94, 176, 140, 0.2);
+}
+
+.panel-label {
+  position: relative;
+  z-index: 1;
+  margin: 0 0 12px;
+  text-transform: uppercase;
+  letter-spacing: 0.15em;
+  font-size: 0.72rem;
+  color: #9bd3b5;
+}
+
+.hero-panel h2 {
+  position: relative;
+  z-index: 1;
+  font-size: clamp(1.7rem, 3vw, 2.6rem);
+  max-width: 10ch;
+}
+
+.hero-panel p,
+.panel-list {
+  position: relative;
+  z-index: 1;
+}
+
+.panel-list {
+  margin: 22px 0 0;
+  padding-left: 20px;
+  color: #eef6ef;
+  line-height: 1.8;
+}
+
+.content-section,
+.contact-section {
+  margin-top: 24px;
+  border-radius: 28px;
+  padding: 28px;
+}
+
+.section-heading {
   display: flex;
-  flex-direction: column;
+  justify-content: space-between;
+  gap: 20px;
+  align-items: end;
+  margin-bottom: 20px;
+}
+
+.section-heading h2,
+.contact-section h2 {
+  max-width: 16ch;
+  font-size: clamp(2rem, 4vw, 3.25rem);
+}
+
+.section-heading.compact h2 {
+  max-width: 15ch;
+}
+
+.card-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 16px;
+}
+
+.feature-card {
+  padding: 22px;
+}
+
+.feature-card h3,
+.timeline-card h3 {
+  margin: 0 0 12px;
+  font-size: 1.2rem;
+}
+
+.impact-section .timeline-card {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 16px;
+  padding: 20px;
+}
+
+.impact-section .timeline-card > div {
+  padding: 8px 6px;
+}
+
+.timeline-step {
+  display: inline-flex;
   align-items: center;
   justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+  width: 2rem;
+  height: 2rem;
+  border-radius: 999px;
+  margin-bottom: 14px;
+  color: #091714;
+  font-weight: 800;
+  background: #a4f0c6;
 }
 
-.App-link {
-  color: #61dafb;
+.contact-section {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 0.8fr);
+  gap: 24px;
+  align-items: center;
 }
 
-.heart {
-  color: #ff0000;
+@media (max-width: 900px) {
+  .hero-grid,
+  .card-grid,
+  .impact-section .timeline-card,
+  .contact-section,
+  .metric-row {
+    grid-template-columns: 1fr;
+  }
+
+  .section-heading,
+  .topbar {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .hero-copy h1 {
+    max-width: 100%;
+  }
+
+  .section-heading h2,
+  .contact-section h2,
+  .hero-panel h2 {
+    max-width: 100%;
+  }
 }
 
-.small {
-  font-size: 0.75rem;
+@media (max-width: 640px) {
+  .envirocore-site {
+    width: min(100% - 20px, 1120px);
+    padding-top: 10px;
+  }
+
+  .hero-card,
+  .content-section,
+  .contact-section {
+    border-radius: 22px;
+    padding: 20px;
+  }
+
+  .hero-copy h1 {
+    font-size: clamp(2.4rem, 13vw, 3.5rem);
+  }
+
+  .metric-card strong {
+    font-size: 1.5rem;
+  }
 }
