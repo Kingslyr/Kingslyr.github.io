@@ -1,6 +1,8 @@
 {
-  "short_name": "React App",
-  "name": "Create React App Sample",
+  "short_name": "EnviroCore",
+  "name": "EnviroCore | Environmental Engineering & Management",
+  "id": "/",
+  "scope": "/",
   "icons": [
     {
       "src": "favicon.ico",
@@ -18,8 +20,8 @@
       "sizes": "512x512"
     }
   ],
-  "start_url": ".",
+  "start_url": "/",
   "display": "standalone",
-  "theme_color": "#000000",
-  "background_color": "#ffffff"
+  "theme_color": "#020c18",
+  "background_color": "#020c18"
 }
