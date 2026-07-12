@@ -211,6 +211,7 @@ footer{position:relative;z-index:1;border-top:1px solid var(--b1);background:rgb
 .esg-field{display:flex;flex-direction:column;gap:.45rem;margin-bottom:1rem}
 .esg-field label{font-size:.7rem;color:var(--mu2);font-weight:600;letter-spacing:.07em;text-transform:uppercase}
 .esg-field input,.esg-field select{background:rgba(255,255,255,.04);border:1px solid var(--b1);border-radius:12px;padding:.82rem 1rem;color:var(--tx);font-family:'Space Grotesk',sans-serif;font-size:.92rem;outline:none;transition:border-color .3s,box-shadow .3s}
+.esg-field select option{background:#081826;color:#dff0e6;}
 .esg-field input:focus,.esg-field select:focus{border-color:var(--g);box-shadow:0 0 0 3px rgba(34,197,94,.1)}
 .esg-btn{width:100%;padding:.9rem;background:linear-gradient(135deg,#1a6b45,#0d9488);color:#fff;border:none;border-radius:12px;font-family:'Space Grotesk',sans-serif;font-size:.95rem;font-weight:600;cursor:pointer;transition:all .3s;margin-top:.5rem}
 .esg-btn:hover{transform:translateY(-2px);box-shadow:0 8px 28px rgba(34,197,94,.35)}
@@ -549,120 +550,111 @@ footer{position:relative;z-index:1;border-top:1px solid var(--b1);background:rgb
 
 
 <script>
-/* ═══ REALISTIC EARTH GLOBE ═══ */
+/* ═══ REALISTIC EARTH GLOBE — NASA texture via Three.js ═══ */
 (function(){
-  const wrap=document.getElementById('earth-wrap');
-  const cv=document.getElementById('earth-canvas');
-  if(!cv)return;
-  const ctx=cv.getContext('2d');
-  cv.width=280;cv.height=280;
-  const W=280,R=136;
-  let ang=0;
+  var wrap = document.getElementById('earth-wrap');
+  var canvas = document.getElementById('earth-canvas');
+  if(!canvas) return;
 
-  function draw(rot){
-    ctx.clearRect(0,0,W,W);
+  // Load Three.js dynamically
+  var t = document.createElement('script');
+  t.src = 'https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js';
+  t.onload = function(){
+    var W = 280;
+    canvas.width = W; canvas.height = W;
 
-    // Clip all to circle
-    ctx.save();
-    ctx.beginPath();ctx.arc(W/2,W/2,R,0,6.28);ctx.clip();
+    var renderer = new THREE.WebGLRenderer({canvas: canvas, antialias: true, alpha: true});
+    renderer.setSize(W, W);
+    renderer.setPixelRatio(window.devicePixelRatio || 1);
 
-    // Ocean
-    const o=ctx.createRadialGradient(W*.38,W*.33,0,W/2,W/2,R);
-    o.addColorStop(0,'#1e88e5');o.addColorStop(.45,'#1565c0');
-    o.addColorStop(.82,'#0d47a1');o.addColorStop(1,'#07318a');
-    ctx.fillStyle=o;ctx.fillRect(0,0,W,W);
+    var scene = new THREE.Scene();
+    var camera = new THREE.PerspectiveCamera(45, 1, 0.1, 100);
+    camera.position.z = 2.5;
 
-    // offset based on rotation
-    const off=(rot%(Math.PI*2))/(Math.PI*2)*W*2;
+    var loader = new THREE.TextureLoader();
 
-    function land(x,y,rx,ry,c,a=0){
-      ctx.save();ctx.translate(x,y);ctx.rotate(a);
-      ctx.beginPath();ctx.ellipse(0,0,rx,ry,0,0,6.28);
-      ctx.fillStyle=c;ctx.fill();ctx.restore();
+    // NASA Blue Marble texture (public domain)
+    loader.load(
+      'https://unpkg.com/three-globe/example/img/earth-blue-marble.jpg',
+      function(texture){
+        var geo = new THREE.SphereGeometry(1, 64, 64);
+        var mat = new THREE.MeshPhongMaterial({
+          map: texture,
+          specular: new THREE.Color(0x333333),
+          shininess: 25
+        });
+        var earth = new THREE.Mesh(geo, mat);
+        scene.add(earth);
+
+        // Atmosphere glow
+        var atmGeo = new THREE.SphereGeometry(1.02, 64, 64);
+        var atmMat = new THREE.MeshPhongMaterial({
+          color: 0x4488ff,
+          transparent: true,
+          opacity: 0.12,
+          side: THREE.FrontSide
+        });
+        scene.add(new THREE.Mesh(atmGeo, atmMat));
+
+        // Lights
+        var sun = new THREE.DirectionalLight(0xffffff, 1.2);
+        sun.position.set(-3, 1, 2);
+        scene.add(sun);
+        scene.add(new THREE.AmbientLight(0x223355, 0.4));
+
+        // Animate
+        function animate(){
+          requestAnimationFrame(animate);
+          earth.rotation.y += 0.003;
+          renderer.render(scene, camera);
+        }
+        animate();
+        setTimeout(function(){ wrap.style.opacity = '0.97'; }, 400);
+      },
+      undefined,
+      function(){
+        // Fallback to canvas earth if texture fails
+        fallbackEarth();
+      }
+    );
+  };
+  t.onerror = function(){ fallbackEarth(); };
+  document.head.appendChild(t);
+
+  function fallbackEarth(){
+    var ctx = canvas.getContext('2d');
+    var W = 280, R = 136;
+    canvas.width = W; canvas.height = W;
+    var ang = 0;
+    function draw(rot){
+      ctx.clearRect(0,0,W,W);
+      ctx.save();
+      ctx.beginPath();ctx.arc(W/2,W/2,R,0,6.28);ctx.clip();
+      var o=ctx.createRadialGradient(W*.38,W*.33,0,W/2,W/2,R);
+      o.addColorStop(0,'#1e88e5');o.addColorStop(.45,'#1565c0');o.addColorStop(.82,'#0d47a1');o.addColorStop(1,'#07318a');
+      ctx.fillStyle=o;ctx.fillRect(0,0,W,W);
+      var off=(rot%(Math.PI*2))/(Math.PI*2)*W*2;
+      function land(x,y,rx,ry,c,a){ctx.save();ctx.translate(x,y);ctx.rotate(a||0);ctx.beginPath();ctx.ellipse(0,0,rx,ry,0,0,6.28);ctx.fillStyle=c;ctx.fill();ctx.restore();}
+      for(var w=0;w<2;w++){var ox=off-w*W*2;
+        land(W*.52-ox,W*.54,25,34,'#2e7d32');land(W*.51-ox,W*.40,20,8,'#a1887f');
+        land(W*.49-ox,W*.31,14,10,'#388e3c');land(W*.70-ox,W*.32,44,21,'#2e7d32');
+        land(W*.74-ox,W*.41,22,13,'#388e3c');land(W*.80-ox,W*.64,19,12,'#a1887f');
+        land(W*.23-ox,W*.35,13,27,'#2e7d32');land(W*.27-ox,W*.57,11,22,'#388e3c');
+      }
+      ctx.fillStyle='#e8f5e9';ctx.beginPath();ctx.ellipse(W/2,W/2-R+9,54,15,0,0,6.28);ctx.fill();
+      ctx.beginPath();ctx.ellipse(W/2,W/2+R-9,54,15,0,0,6.28);ctx.fill();
+      ctx.restore();
+      var atm=ctx.createRadialGradient(W/2,W/2,R*.68,W/2,W/2,R+8);
+      atm.addColorStop(0,'rgba(100,181,246,0)');atm.addColorStop(.6,'rgba(66,165,245,.10)');atm.addColorStop(1,'rgba(30,136,229,.35)');
+      ctx.beginPath();ctx.arc(W/2,W/2,R+8,0,6.28);ctx.fillStyle=atm;ctx.fill();
+      var sh=ctx.createRadialGradient(W*.83,W/2,0,W*.76,W/2,R*1.12);
+      sh.addColorStop(0,'rgba(0,0,10,.92)');sh.addColorStop(.5,'rgba(0,0,6,.55)');sh.addColorStop(1,'rgba(0,0,0,0)');
+      ctx.beginPath();ctx.arc(W/2,W/2,R+8,0,6.28);ctx.fillStyle=sh;ctx.fill();
     }
-
-    const G1='#2e7d32',G2='#388e3c',G3='#43a047',SA='#bcaaa4',DE='#a1887f';
-
-    // Render twice for seamless wrap
-    for(let w=0;w<2;w++){
-      const ox=off-(w*W*2);
-      // Africa
-      land(W*.52-ox,W*.54,25,34,G1);
-      land(W*.54-ox,W*.44,14,12,G2);
-      land(W*.51-ox,W*.40,20,8,DE); // Sahara
-      land(W*.56-ox,W*.60,9,7,G1); // South Africa
-
-      // Europe
-      land(W*.49-ox,W*.31,14,10,G2);
-      land(W*.47-ox,W*.24,7,13,G1,.18); // Scandinavia
-
-      // Middle East
-      land(W*.57-ox,W*.38,11,9,SA);
-
-      // Asia
-      land(W*.70-ox,W*.32,44,21,G1);
-      land(W*.74-ox,W*.41,22,13,G2);
-      land(W*.87-ox,W*.28,14,10,G1);
-      land(W*.67-ox,W*.25,18,8,G3);
-      land(W*.60-ox,W*.36,10,8,G2); // Indian subcontinent
-
-      // SE Asia
-      land(W*.83-ox,W*.50,10,8,G2);
-      land(W*.90-ox,W*.54,7,6,G1);
-
-      // Australia
-      land(W*.80-ox,W*.64,19,12,DE);
-      land(W*.76-ox,W*.61,6,5,G2);
-
-      // N America
-      land(W*.23-ox,W*.35,13,27,G1);
-      land(W*.20-ox,W*.33,8,14,G3);
-      // Greenland
-      land(W*.30-ox,W*.18,8,13,'#e0f7fa',.25);
-
-      // S America
-      land(W*.27-ox,W*.57,11,22,G2);
-      land(W*.24-ox,W*.56,7,8,G1);
-    }
-
-    // Ice caps
-    ctx.fillStyle='#e8f5e9';
-    ctx.beginPath();ctx.ellipse(W/2,W/2-R+9,54,15,0,0,6.28);ctx.fill();
-    ctx.beginPath();ctx.ellipse(W/2,W/2+R-9,54,15,0,0,6.28);ctx.fill();
-
-    // Clouds
-    ctx.globalAlpha=.14;
-    land(W*.44-off*.65,W*.28,34,7,'#fff',.22);
-    land(W*.62-off*.65,W*.52,25,6,'#fff',-.15);
-    land(W*.33-off*.65,W*.63,20,5,'#fff',.08);
-    ctx.globalAlpha=1;
-
-    ctx.restore();
-
-    // Atmosphere glow
-    const atm=ctx.createRadialGradient(W/2,W/2,R*.68,W/2,W/2,R+8);
-    atm.addColorStop(0,'rgba(100,181,246,0)');
-    atm.addColorStop(.6,'rgba(66,165,245,.10)');
-    atm.addColorStop(1,'rgba(30,136,229,.35)');
-    ctx.beginPath();ctx.arc(W/2,W/2,R+8,0,6.28);ctx.fillStyle=atm;ctx.fill();
-
-    // Night shadow
-    const sh=ctx.createRadialGradient(W*.83,W/2,0,W*.76,W/2,R*1.12);
-    sh.addColorStop(0,'rgba(0,0,10,.92)');
-    sh.addColorStop(.5,'rgba(0,0,6,.55)');
-    sh.addColorStop(1,'rgba(0,0,0,0)');
-    ctx.beginPath();ctx.arc(W/2,W/2,R+8,0,6.28);ctx.fillStyle=sh;ctx.fill();
-
-    // Specular
-    const sp=ctx.createRadialGradient(W*.34,W*.30,0,W*.36,W*.33,R*.66);
-    sp.addColorStop(0,'rgba(255,255,255,.22)');
-    sp.addColorStop(.38,'rgba(200,230,255,.07)');
-    sp.addColorStop(1,'rgba(255,255,255,0)');
-    ctx.beginPath();ctx.arc(W/2,W/2,R+8,0,6.28);ctx.fillStyle=sp;ctx.fill();
+    function loop(){ang+=.003;draw(ang);requestAnimationFrame(loop);}
+    loop();
+    setTimeout(function(){wrap.style.opacity='.97';},400);
   }
-
-  function loop(){ang+=.003;draw(ang);requestAnimationFrame(loop);}
-  window.addEventListener('load',()=>{loop();setTimeout(()=>wrap.style.opacity='.97',400);});
 })();
 
 /* ═══ STARFIELD ═══ */
@@ -771,8 +763,6 @@ document.querySelectorAll('.scard,.pcard').forEach(card=>{
 })();
 
 /* ═══ PAKISTAN MAP ═══ */
-/* MAP FUNCTION MOVED TO BOTTOM */
-
 /* ═══ LIVE ENVIRONMENTAL DASHBOARD ═══ */
 (function(){
   const cities=[
@@ -847,10 +837,15 @@ document.querySelectorAll('.scard,.pcard').forEach(card=>{
     });
 
     // English labels tile layer
-    L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png', {
+    L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_nolabels/{z}/{x}/{y}{r}.png', {
       attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> &copy; <a href="https://carto.com/">CARTO</a>',
       subdomains: 'abcd',
       maxZoom: 19
+    }).addTo(map);
+
+    // English labels on top
+    L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_only_labels/{z}/{x}/{y}{r}.png', {
+      subdomains: 'abcd', maxZoom: 19
     }).addTo(map);
 
     var tc = {
