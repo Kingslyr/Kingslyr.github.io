@@ -263,7 +263,6 @@ footer{position:relative;z-index:1;border-top:1px solid var(--b1);background:rgb
   </div>
   <div class="sind"><span class="stxt">Scroll</span><div class="sline"></div></div>
 </section>
-
 <!-- MARQUEE -->
 <div class="mqw"><div class="mqt">
   <span class="mqi">Environmental Impact Assessment</span><span class="mqi">ESG Auditing</span>
@@ -275,7 +274,6 @@ footer{position:relative;z-index:1;border-top:1px solid var(--b1);background:rgb
   <span class="mqi">Sustainable Design</span><span class="mqi">NEPA Compliance</span>
   <span class="mqi">Carbon Auditing</span><span class="mqi">Climate Action</span>
 </div></div>
-
 <!-- SERVICES -->
 <div class="sec" id="services">
   <div class="stag">What We Do</div>
@@ -291,6 +289,8 @@ footer{position:relative;z-index:1;border-top:1px solid var(--b1);background:rgb
   </div>
 </div>
 
+<div class="dv"></div>
+
 <!-- STATS -->
 <div class="sstrip">
   <div class="sti rev"><div class="snum" data-target="15" data-suffix="+">0</div><div class="slb">Projects Completed</div><div class="sarr">↑ Growing portfolio</div></div>
@@ -300,6 +300,7 @@ footer{position:relative;z-index:1;border-top:1px solid var(--b1);background:rgb
 </div>
 
 <div class="dv" style="margin:3rem auto"></div>
+
 <div class="dv"></div>
 
 <!-- PROCESS -->
@@ -313,7 +314,6 @@ footer{position:relative;z-index:1;border-top:1px solid var(--b1);background:rgb
     <div class="pstep ps-anim" style="transition-delay:.45s"><div class="ptag">Phase 04</div><div class="ph">Mitigation & Regulatory Reporting</div><div class="pd">Actionable mitigation plans and regulatory-ready reports satisfying NEPA, provincial EPAs, and international lender requirements — delivered on schedule.</div></div>
   </div>
 </div>
-
 
 <div class="dv"></div>
 
@@ -331,9 +331,6 @@ footer{position:relative;z-index:1;border-top:1px solid var(--b1);background:rgb
     <div class="pcard rev" style="transition-delay:.34s"><div class="pnum">06 — Community</div><h3>Coastal Mangrove Restoration</h3><div class="ploc">📍 Karachi Coastal Belt</div><p>Mangrove restoration programme and environmental awareness campaigns protecting coastal habitat with local NGOs and fishing communities.</p><div class="parr">Learn more →</div></div>
   </div>
 </div>
-
-<div class="dv"></div>
-
 
 <div class="dv"></div>
 
@@ -376,7 +373,6 @@ footer{position:relative;z-index:1;border-top:1px solid var(--b1);background:rgb
   </div>
 </div>
 
-
 <div class="dv"></div>
 
 <!-- PAKISTAN MAP -->
@@ -386,9 +382,6 @@ footer{position:relative;z-index:1;border-top:1px solid var(--b1);background:rgb
   <p class="ss">Click any pin to explore our environmental projects nationwide.</p>
   <div id="pak-map"></div>
 </div>
-
-<div class="dv"></div>
-
 
 <div class="dv"></div>
 
@@ -402,9 +395,6 @@ footer{position:relative;z-index:1;border-top:1px solid var(--b1);background:rgb
     <div class="dash-card rev"><div class="dash-label">Loading…</div><div class="dash-val">—</div></div>
   </div>
 </div>
-
-<div class="dv"></div>
-
 
 <div class="dv"></div>
 
@@ -431,8 +421,6 @@ footer{position:relative;z-index:1;border-top:1px solid var(--b1);background:rgb
     </div>
   </div>
 </div>
-
-
 <!-- FOOTER -->
 <footer>
   <span class="fc">© 2026 EnviroCore Engineering & Management Consultants. All rights reserved.</span>
@@ -668,31 +656,34 @@ document.querySelectorAll('.scard,.pcard').forEach(card=>{
 
 /* ═══ PAKISTAN MAP ═══ */
 function initPakMap(){
-  if(typeof L==='undefined'){setTimeout(initPakMap,300);return;}
+  if(typeof L==='undefined'){setTimeout(initPakMap,500);return;}
   const el=document.getElementById('pak-map');
   if(!el||el._leaflet_id)return;
   const map=L.map('pak-map',{center:[30.3753,69.3451],zoom:5,scrollWheelZoom:false});
-  // Use CartoDB Dark tiles
-  L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_nolabels/{z}/{x}/{y}{r}.png',{
-    attribution:'&copy; OpenStreetMap &copy; CARTO',subdomains:'abcd',maxZoom:19
+  L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png',{
+    attribution:'&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>',
+    maxZoom:19,crossOrigin:true
   }).addTo(map);
-  // Add labels on top
-  L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_only_labels/{z}/{x}/{y}{r}.png',{
-    subdomains:'abcd',maxZoom:19,pane:'overlayPane'
-  }).addTo(map);
-
   const tc={EIA:'#22c55e',ESG:'#0d9488',GIS:'#4ade80',GHG:'#86efac',IEE:'#1a6b45',Community:'#2dd4bf'};
   const projects=[
-    {lat:24.8607,lng:67.0011,title:'Industrial Zone EIA',type:'EIA',city:'Karachi, Sindh',desc:'Full EIA for a major industrial facility — air dispersion modelling, effluent management, and community risk assessment leading to EPA approval.'},
-    {lat:31.4504,lng:73.1350,title:'Textile Sector ESG Audit',type:'ESG',city:'Faisalabad, Punjab',desc:'GRI-aligned ESG audit enabling EU market compliance and unlocking international sustainable finance channels for a textile exporter.'},
+    {lat:24.8607,lng:67.0011,title:'Industrial Zone EIA',type:'EIA',city:'Karachi, Sindh',desc:'Full EIA for a major industrial facility — air dispersion modelling, effluent management, and community risk assessment.'},
+    {lat:31.4504,lng:73.1350,title:'Textile Sector ESG Audit',type:'ESG',city:'Faisalabad, Punjab',desc:'GRI-aligned ESG audit enabling EU market compliance and sustainable finance for a textile exporter.'},
     {lat:31.5204,lng:74.3587,title:'Urban Expansion GIS & Site Planning',type:'GIS',city:'Lahore, Punjab',desc:'Spatial analysis and AutoCAD site planning for a 200-acre development.'},
-    {lat:33.6844,lng:73.0479,title:'Carbon Inventory & Net-Zero Roadmap',type:'GHG',city:'Islamabad',desc:'Scope 1–3 GHG inventory for a government institution with net-zero pathway.'},
-    {lat:28.3949,lng:65.7150,title:'Regional Highway IEE',type:'IEE',city:'Balochistan',desc:'Initial Environmental Examination for a 120km highway corridor.'},
-    {lat:24.7500,lng:66.9800,title:'Coastal Mangrove Restoration',type:'Community',city:'Karachi Coastal Belt',desc:'Mangrove restoration programme protecting coastal habitat with local NGOs.'}
+    {lat:33.6844,lng:73.0479,title:'Carbon Inventory & Net-Zero Roadmap',type:'GHG',city:'Islamabad',desc:'Scope 1–3 GHG inventory with net-zero pathway for a government institution.'},
+    {lat:28.3949,lng:65.7150,title:'Regional Highway IEE',type:'IEE',city:'Balochistan',desc:'IEE for a 120km highway corridor — ecological screening and mitigation planning.'},
+    {lat:24.7500,lng:66.9800,title:'Coastal Mangrove Restoration',type:'Community',city:'Karachi Coastal Belt',desc:'Mangrove restoration protecting coastal habitat with local NGOs and fishing communities.'}
   ];
   projects.forEach(p=>{
-    const icon=L.divIcon({className:'',html:`<div style="width:16px;height:16px;background:${tc[p.type]||'#22c55e'};border-radius:50%;border:2px solid #fff;box-shadow:0 0 14px ${tc[p.type]}cc,0 0 28px ${tc[p.type]}66;cursor:pointer;"></div>`,iconSize:[16,16],iconAnchor:[8,8],popupAnchor:[0,-12]});
-    L.marker([p.lat,p.lng],{icon}).addTo(map).bindPopup(L.popup({className:'eco-popup',maxWidth:280}).setContent(`<div style="font-family:'Space Grotesk',sans-serif;padding:4px;"><div style="font-size:.6rem;font-weight:700;letter-spacing:.15em;text-transform:uppercase;color:${tc[p.type]};margin-bottom:4px;">${p.type}</div><div style="font-size:.95rem;font-weight:700;color:#dff0e6;margin-bottom:4px;">${p.title}</div><div style="font-size:.72rem;color:#86b096;margin-bottom:8px;">📍 ${p.city}</div><div style="font-size:.78rem;color:#86b096;line-height:1.6;">${p.desc}</div></div>`));
+    const icon=L.divIcon({className:'',
+      html:`<div style="width:16px;height:16px;background:${tc[p.type]};border-radius:50%;border:2.5px solid #fff;box-shadow:0 0 10px ${tc[p.type]},0 0 20px ${tc[p.type]}88;"></div>`,
+      iconSize:[16,16],iconAnchor:[8,8],popupAnchor:[0,-12]});
+    const popup=`<div style="font-family:sans-serif;padding:6px;background:#081826;color:#dff0e6;border-radius:8px;">
+      <div style="font-size:10px;font-weight:700;text-transform:uppercase;color:${tc[p.type]};margin-bottom:4px;">${p.type}</div>
+      <div style="font-size:14px;font-weight:700;margin-bottom:3px;">${p.title}</div>
+      <div style="font-size:11px;color:#86b096;margin-bottom:6px;">📍 ${p.city}</div>
+      <div style="font-size:11px;color:#86b096;line-height:1.5;">${p.desc}</div>
+    </div>`;
+    L.marker([p.lat,p.lng],{icon}).addTo(map).bindPopup(popup);
   });
 }
 
@@ -753,5 +744,6 @@ function initPakMap(){
   setInterval(fetchDashboard,5*60*1000);// refresh every 5 minutes
 })();
 </script>
+<script>window.addEventListener("load",function(){setTimeout(initPakMap,800);});</script>
 </body>
 </html>
