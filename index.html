@@ -550,112 +550,99 @@ footer{position:relative;z-index:1;border-top:1px solid var(--b1);background:rgb
 
 
 <script>
-/* ═══ REALISTIC EARTH GLOBE — NASA texture via Three.js ═══ */
+/* ═══ EARTH GLOBE — Three.js NASA texture ═══ */
 (function(){
   var wrap = document.getElementById('earth-wrap');
-  var canvas = document.getElementById('earth-canvas');
-  if(!canvas) return;
+  if(!wrap) return;
 
-  // Load Three.js dynamically
-  var t = document.createElement('script');
-  t.src = 'https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js';
-  t.onload = function(){
-    var W = 280;
-    canvas.width = W; canvas.height = W;
+  // Create canvas properly
+  var cv = document.getElementById('earth-canvas');
+  if(!cv) return;
 
-    var renderer = new THREE.WebGLRenderer({canvas: canvas, antialias: true, alpha: true});
-    renderer.setSize(W, W);
-    renderer.setPixelRatio(window.devicePixelRatio || 1);
+  var scr = document.createElement('script');
+  scr.src = 'https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js';
+  scr.onload = function(){
+    try {
+      var W = 280;
+      var renderer = new THREE.WebGLRenderer({canvas: cv, antialias: true, alpha: true});
+      renderer.setSize(W, W);
+      renderer.setClearColor(0x000000, 0);
 
-    var scene = new THREE.Scene();
-    var camera = new THREE.PerspectiveCamera(45, 1, 0.1, 100);
-    camera.position.z = 2.5;
+      var scene = new THREE.Scene();
+      var camera = new THREE.PerspectiveCamera(45, 1, 0.1, 100);
+      camera.position.z = 2.5;
 
-    var loader = new THREE.TextureLoader();
+      // Lights
+      var sunLight = new THREE.DirectionalLight(0xffffff, 1.3);
+      sunLight.position.set(-3, 1, 2);
+      scene.add(sunLight);
+      scene.add(new THREE.AmbientLight(0x223355, 0.5));
 
-    // NASA Blue Marble texture (public domain)
-    loader.load(
-      'https://unpkg.com/three-globe/example/img/earth-blue-marble.jpg',
-      function(texture){
-        var geo = new THREE.SphereGeometry(1, 64, 64);
-        var mat = new THREE.MeshPhongMaterial({
-          map: texture,
-          specular: new THREE.Color(0x333333),
-          shininess: 25
-        });
-        var earth = new THREE.Mesh(geo, mat);
-        scene.add(earth);
+      // Earth sphere
+      var geo = new THREE.SphereGeometry(1, 64, 64);
+      var loader = new THREE.TextureLoader();
+      loader.crossOrigin = 'anonymous';
 
-        // Atmosphere glow
-        var atmGeo = new THREE.SphereGeometry(1.02, 64, 64);
-        var atmMat = new THREE.MeshPhongMaterial({
-          color: 0x4488ff,
-          transparent: true,
-          opacity: 0.12,
-          side: THREE.FrontSide
-        });
-        scene.add(new THREE.Mesh(atmGeo, atmMat));
+      loader.load(
+        'https://unpkg.com/three-globe/example/img/earth-blue-marble.jpg',
+        function(tex){
+          var mat = new THREE.MeshPhongMaterial({map: tex, specular: new THREE.Color(0x222222), shininess: 20});
+          var earth = new THREE.Mesh(geo, mat);
+          scene.add(earth);
 
-        // Lights
-        var sun = new THREE.DirectionalLight(0xffffff, 1.2);
-        sun.position.set(-3, 1, 2);
-        scene.add(sun);
-        scene.add(new THREE.AmbientLight(0x223355, 0.4));
+          // Atmosphere
+          var atmMat = new THREE.MeshPhongMaterial({color:0x4488ff, transparent:true, opacity:0.10, side:THREE.FrontSide});
+          scene.add(new THREE.Mesh(new THREE.SphereGeometry(1.03, 32, 32), atmMat));
 
-        // Animate
-        function animate(){
-          requestAnimationFrame(animate);
-          earth.rotation.y += 0.003;
-          renderer.render(scene, camera);
-        }
-        animate();
-        setTimeout(function(){ wrap.style.opacity = '0.97'; }, 400);
-      },
-      undefined,
-      function(){
-        // Fallback to canvas earth if texture fails
-        fallbackEarth();
-      }
-    );
+          function animate(){ requestAnimationFrame(animate); earth.rotation.y += 0.003; renderer.render(scene, camera); }
+          animate();
+          setTimeout(function(){ wrap.style.opacity = '0.97'; }, 500);
+        },
+        undefined,
+        function(){ useFallback(cv, wrap); }
+      );
+    } catch(e){ useFallback(cv, wrap); }
   };
-  t.onerror = function(){ fallbackEarth(); };
-  document.head.appendChild(t);
+  scr.onerror = function(){ useFallback(cv, wrap); };
+  document.head.appendChild(scr);
 
-  function fallbackEarth(){
+  function useFallback(canvas, wrap){
+    canvas.width = 280; canvas.height = 280;
     var ctx = canvas.getContext('2d');
-    var W = 280, R = 136;
-    canvas.width = W; canvas.height = W;
-    var ang = 0;
-    function draw(rot){
+    if(!ctx) return;
+    var W=280, R=134, ang=0;
+    function draw(r){
       ctx.clearRect(0,0,W,W);
       ctx.save();
-      ctx.beginPath();ctx.arc(W/2,W/2,R,0,6.28);ctx.clip();
-      var o=ctx.createRadialGradient(W*.38,W*.33,0,W/2,W/2,R);
-      o.addColorStop(0,'#1e88e5');o.addColorStop(.45,'#1565c0');o.addColorStop(.82,'#0d47a1');o.addColorStop(1,'#07318a');
-      ctx.fillStyle=o;ctx.fillRect(0,0,W,W);
-      var off=(rot%(Math.PI*2))/(Math.PI*2)*W*2;
-      function land(x,y,rx,ry,c,a){ctx.save();ctx.translate(x,y);ctx.rotate(a||0);ctx.beginPath();ctx.ellipse(0,0,rx,ry,0,0,6.28);ctx.fillStyle=c;ctx.fill();ctx.restore();}
-      for(var w=0;w<2;w++){var ox=off-w*W*2;
-        land(W*.52-ox,W*.54,25,34,'#2e7d32');land(W*.51-ox,W*.40,20,8,'#a1887f');
-        land(W*.49-ox,W*.31,14,10,'#388e3c');land(W*.70-ox,W*.32,44,21,'#2e7d32');
-        land(W*.74-ox,W*.41,22,13,'#388e3c');land(W*.80-ox,W*.64,19,12,'#a1887f');
-        land(W*.23-ox,W*.35,13,27,'#2e7d32');land(W*.27-ox,W*.57,11,22,'#388e3c');
+      ctx.beginPath(); ctx.arc(W/2,W/2,R,0,6.28); ctx.clip();
+      var og=ctx.createRadialGradient(W*.38,W*.33,0,W/2,W/2,R);
+      og.addColorStop(0,'#1e88e5'); og.addColorStop(.5,'#1565c0'); og.addColorStop(1,'#0a3d8f');
+      ctx.fillStyle=og; ctx.fillRect(0,0,W,W);
+      var ox=(r%(Math.PI*2))/(Math.PI*2)*W*2;
+      function land(x,y,rx,ry,c){ ctx.save(); ctx.translate(x,y); ctx.beginPath(); ctx.ellipse(0,0,rx,ry,0,0,6.28); ctx.fillStyle=c; ctx.fill(); ctx.restore(); }
+      for(var w=0;w<2;w++){ var o=ox-w*W*2;
+        land(W*.52-o,W*.54,25,34,'#2e7d32'); land(W*.51-o,W*.40,20,8,'#a1887f');
+        land(W*.49-o,W*.31,14,10,'#388e3c'); land(W*.70-o,W*.32,44,21,'#2e7d32');
+        land(W*.74-o,W*.41,22,13,'#388e3c'); land(W*.80-o,W*.64,19,12,'#a1887f');
+        land(W*.23-o,W*.35,13,27,'#2e7d32'); land(W*.27-o,W*.57,11,22,'#388e3c');
       }
-      ctx.fillStyle='#e8f5e9';ctx.beginPath();ctx.ellipse(W/2,W/2-R+9,54,15,0,0,6.28);ctx.fill();
-      ctx.beginPath();ctx.ellipse(W/2,W/2+R-9,54,15,0,0,6.28);ctx.fill();
+      ctx.fillStyle='#e8f5e9';
+      ctx.beginPath(); ctx.ellipse(W/2,W/2-R+9,52,14,0,0,6.28); ctx.fill();
+      ctx.beginPath(); ctx.ellipse(W/2,W/2+R-9,52,14,0,0,6.28); ctx.fill();
       ctx.restore();
-      var atm=ctx.createRadialGradient(W/2,W/2,R*.68,W/2,W/2,R+8);
-      atm.addColorStop(0,'rgba(100,181,246,0)');atm.addColorStop(.6,'rgba(66,165,245,.10)');atm.addColorStop(1,'rgba(30,136,229,.35)');
-      ctx.beginPath();ctx.arc(W/2,W/2,R+8,0,6.28);ctx.fillStyle=atm;ctx.fill();
-      var sh=ctx.createRadialGradient(W*.83,W/2,0,W*.76,W/2,R*1.12);
-      sh.addColorStop(0,'rgba(0,0,10,.92)');sh.addColorStop(.5,'rgba(0,0,6,.55)');sh.addColorStop(1,'rgba(0,0,0,0)');
-      ctx.beginPath();ctx.arc(W/2,W/2,R+8,0,6.28);ctx.fillStyle=sh;ctx.fill();
+      var sh=ctx.createRadialGradient(W*.82,W/2,0,W*.75,W/2,R*1.1);
+      sh.addColorStop(0,'rgba(0,0,10,.9)'); sh.addColorStop(.5,'rgba(0,0,6,.5)'); sh.addColorStop(1,'rgba(0,0,0,0)');
+      ctx.beginPath(); ctx.arc(W/2,W/2,R,0,6.28); ctx.fillStyle=sh; ctx.fill();
+      var atm=ctx.createRadialGradient(W/2,W/2,R*.7,W/2,W/2,R+6);
+      atm.addColorStop(0,'rgba(100,181,246,0)'); atm.addColorStop(1,'rgba(30,136,229,.3)');
+      ctx.beginPath(); ctx.arc(W/2,W/2,R+6,0,6.28); ctx.fillStyle=atm; ctx.fill();
     }
-    function loop(){ang+=.003;draw(ang);requestAnimationFrame(loop);}
+    function loop(){ ang+=.003; draw(ang); requestAnimationFrame(loop); }
     loop();
-    setTimeout(function(){wrap.style.opacity='.97';},400);
+    setTimeout(function(){ wrap.style.opacity='.97'; }, 400);
   }
 })();
+
 
 /* ═══ STARFIELD ═══ */
 (function(){
@@ -865,7 +852,7 @@ document.querySelectorAll('.scard,.pcard').forEach(card=>{
     projects.forEach(function(p){
       var icon = L.divIcon({
         className: '',
-        html: '<div style="width:18px;height:18px;background:'+tc[p.type]+';border-radius:50%;border:3px solid #fff;box-shadow:0 0 12px '+tc[p.type]+',0 0 24px '+tc[p.type]+'88;cursor:pointer;transition:transform .2s;" onmouseover="this.style.transform='scale(1.4)'" onmouseout="this.style.transform='scale(1)'"></div>',
+        html: '<div style="width:18px;height:18px;background:'+tc[p.type]+';border-radius:50%;border:3px solid #fff;box-shadow:0 0 12px '+tc[p.type]+';cursor:pointer;"></div>',
         iconSize: [18,18],
         iconAnchor: [9,9],
         popupAnchor: [0,-14]
