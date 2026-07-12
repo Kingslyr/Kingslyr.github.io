@@ -431,7 +431,7 @@ footer{position:relative;z-index:1;border-top:1px solid var(--b1);background:rgb
   </div>
 </footer>
 
-<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" onload="initPakMap()"></script>
+
 <script>
 /* ═══ REALISTIC EARTH GLOBE ═══ */
 (function(){
@@ -655,38 +655,7 @@ document.querySelectorAll('.scard,.pcard').forEach(card=>{
 })();
 
 /* ═══ PAKISTAN MAP ═══ */
-function initPakMap(){
-  if(typeof L==='undefined'){setTimeout(initPakMap,500);return;}
-  const el=document.getElementById('pak-map');
-  if(!el||el._leaflet_id)return;
-  const map=L.map('pak-map',{center:[30.3753,69.3451],zoom:5,scrollWheelZoom:false});
-  L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png',{
-    attribution:'&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>',
-    maxZoom:19,crossOrigin:true
-  }).addTo(map);
-  const tc={EIA:'#22c55e',ESG:'#0d9488',GIS:'#4ade80',GHG:'#86efac',IEE:'#1a6b45',Community:'#2dd4bf'};
-  const projects=[
-    {lat:24.8607,lng:67.0011,title:'Industrial Zone EIA',type:'EIA',city:'Karachi, Sindh',desc:'Full EIA for a major industrial facility — air dispersion modelling, effluent management, and community risk assessment.'},
-    {lat:31.4504,lng:73.1350,title:'Textile Sector ESG Audit',type:'ESG',city:'Faisalabad, Punjab',desc:'GRI-aligned ESG audit enabling EU market compliance and sustainable finance for a textile exporter.'},
-    {lat:31.5204,lng:74.3587,title:'Urban Expansion GIS & Site Planning',type:'GIS',city:'Lahore, Punjab',desc:'Spatial analysis and AutoCAD site planning for a 200-acre development.'},
-    {lat:33.6844,lng:73.0479,title:'Carbon Inventory & Net-Zero Roadmap',type:'GHG',city:'Islamabad',desc:'Scope 1–3 GHG inventory with net-zero pathway for a government institution.'},
-    {lat:28.3949,lng:65.7150,title:'Regional Highway IEE',type:'IEE',city:'Balochistan',desc:'IEE for a 120km highway corridor — ecological screening and mitigation planning.'},
-    {lat:24.7500,lng:66.9800,title:'Coastal Mangrove Restoration',type:'Community',city:'Karachi Coastal Belt',desc:'Mangrove restoration protecting coastal habitat with local NGOs and fishing communities.'}
-  ];
-  projects.forEach(p=>{
-    const icon=L.divIcon({className:'',
-      html:`<div style="width:16px;height:16px;background:${tc[p.type]};border-radius:50%;border:2.5px solid #fff;box-shadow:0 0 10px ${tc[p.type]},0 0 20px ${tc[p.type]}88;"></div>`,
-      iconSize:[16,16],iconAnchor:[8,8],popupAnchor:[0,-12]});
-    const popup=`<div style="font-family:sans-serif;padding:6px;background:#081826;color:#dff0e6;border-radius:8px;">
-      <div style="font-size:10px;font-weight:700;text-transform:uppercase;color:${tc[p.type]};margin-bottom:4px;">${p.type}</div>
-      <div style="font-size:14px;font-weight:700;margin-bottom:3px;">${p.title}</div>
-      <div style="font-size:11px;color:#86b096;margin-bottom:6px;">📍 ${p.city}</div>
-      <div style="font-size:11px;color:#86b096;line-height:1.5;">${p.desc}</div>
-    </div>`;
-    L.marker([p.lat,p.lng],{icon}).addTo(map).bindPopup(popup);
-  });
-}
-
+/* MAP FUNCTION MOVED TO BOTTOM */
 
 /* ═══ LIVE ENVIRONMENTAL DASHBOARD ═══ */
 (function(){
@@ -744,6 +713,67 @@ function initPakMap(){
   setInterval(fetchDashboard,5*60*1000);// refresh every 5 minutes
 })();
 </script>
-<script>window.addEventListener("load",function(){setTimeout(initPakMap,800);});</script>
+
+<script>
+/* ═══ PAKISTAN MAP — Dynamic Load ═══ */
+(function(){
+  // Create script tag for Leaflet JS
+  var s = document.createElement('script');
+  s.src = 'https://unpkg.com/leaflet@1.9.4/dist/leaflet.js';
+  s.onload = function(){
+    var el = document.getElementById('pak-map');
+    if(!el) return;
+
+    var map = L.map('pak-map', {
+      center: [30.3753, 69.3451],
+      zoom: 5,
+      scrollWheelZoom: false,
+      zoomControl: true
+    });
+
+    // OpenStreetMap tiles - most reliable
+    L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
+      attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>',
+      maxZoom: 19
+    }).addTo(map);
+
+    var tc = {
+      EIA:'#22c55e', ESG:'#0d9488', GIS:'#4ade80',
+      GHG:'#86efac', IEE:'#1a6b45', Community:'#2dd4bf'
+    };
+
+    var projects = [
+      {lat:24.8607,lng:67.0011,title:'Industrial Zone EIA',type:'EIA',city:'Karachi, Sindh',desc:'Full EIA for a major industrial facility — air dispersion modelling, effluent management, and community risk assessment leading to EPA approval.'},
+      {lat:31.4504,lng:73.1350,title:'Textile Sector ESG Audit',type:'ESG',city:'Faisalabad, Punjab',desc:'GRI-aligned ESG audit enabling EU market compliance and sustainable finance channels for a textile exporter.'},
+      {lat:31.5204,lng:74.3587,title:'Urban Expansion GIS & Site Planning',type:'GIS',city:'Lahore, Punjab',desc:'Spatial analysis and AutoCAD site planning for a 200-acre development — land-use conflict mapping and topographic survey.'},
+      {lat:33.6844,lng:73.0479,title:'Carbon Inventory & Net-Zero Roadmap',type:'GHG',city:'Islamabad',desc:'Scope 1–3 GHG inventory for a government institution with net-zero pathway aligned with UNFCCC guidelines.'},
+      {lat:28.3949,lng:65.7150,title:'Regional Highway IEE',type:'IEE',city:'Balochistan',desc:'Initial Environmental Examination for a 120km highway corridor — ecological screening and mitigation planning.'},
+      {lat:24.7500,lng:66.9800,title:'Coastal Mangrove Restoration',type:'Community',city:'Karachi Coastal Belt',desc:'Mangrove restoration programme protecting coastal habitat with local NGOs and fishing communities.'}
+    ];
+
+    projects.forEach(function(p){
+      var icon = L.divIcon({
+        className: '',
+        html: '<div style="width:16px;height:16px;background:'+tc[p.type]+';border-radius:50%;border:2.5px solid #fff;box-shadow:0 0 10px '+tc[p.type]+',0 0 22px '+tc[p.type]+'88;cursor:pointer;"></div>',
+        iconSize: [16,16],
+        iconAnchor: [8,8],
+        popupAnchor: [0,-14]
+      });
+      var popup = '<div style="font-family:Space Grotesk,sans-serif;padding:6px;">'
+        + '<div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:2px;color:'+tc[p.type]+';margin-bottom:4px;">'+p.type+'</div>'
+        + '<div style="font-size:14px;font-weight:700;color:#dff0e6;margin-bottom:3px;">'+p.title+'</div>'
+        + '<div style="font-size:11px;color:#86b096;margin-bottom:6px;">📍 '+p.city+'</div>'
+        + '<div style="font-size:11px;color:#86b096;line-height:1.6;">'+p.desc+'</div>'
+        + '</div>';
+      L.marker([p.lat,p.lng],{icon:icon}).addTo(map).bindPopup(popup);
+    });
+  };
+  s.onerror = function(){
+    document.getElementById('pak-map').innerHTML = '<div style="display:flex;align-items:center;justify-content:center;height:100%;color:#547a63;font-family:Space Grotesk,sans-serif;">Map temporarily unavailable. Please refresh.</div>';
+  };
+  document.head.appendChild(s);
+})();
+</script>
+
 </body>
 </html>
