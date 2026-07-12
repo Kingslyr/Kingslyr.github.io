@@ -947,9 +947,12 @@ function calcESG(){
         + '<div style="font-size:11px;color:#86b096;line-height:1.5;">'+p.desc+'</div>'
         + '</div>';
 
-      L.marker([p.lat, p.lng], {icon: icon})
-        .addTo(map)
-        .bindPopup(content, {maxWidth: 260});
+      (function(proj, col){
+        var mk = L.marker([proj.lat, proj.lng], {icon: icon});
+        mk.bindPopup(content, {maxWidth: 260, className: 'eco-popup'});
+        mk.addTo(map);
+        mk.on('click', function(){ mk.openPopup(); });
+      })(p, color);
     });
 
     // Popup styles
