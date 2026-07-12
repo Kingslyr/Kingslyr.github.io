@@ -434,6 +434,121 @@ footer{position:relative;z-index:1;border-top:1px solid var(--b1);background:rgb
 (function(){
   const wrap=document.getElementById('earth-wrap');
   const canvas=document.getElementById('earth-canvas');
+  if(!canvas)return;
+  const ctx=canvas.getContext('2d');
+  const W=280,H=280,R=135;
+  let angle=0;
+
+  function drawEarth(rot){
+    ctx.clearRect(0,0,W,H);
+    ctx.save();
+    // Clip to circle
+    ctx.beginPath();
+    ctx.arc(W/2,H/2,R,0,Math.PI*2);
+    ctx.clip();
+
+    // Ocean gradient
+    const ocean=ctx.createRadialGradient(W*0.38,H*0.33,0,W/2,H/2,R);
+    ocean.addColorStop(0,'#2288e0');
+    ocean.addColorStop(0.4,'#1565c0');
+    ocean.addColorStop(0.8,'#0d47a1');
+    ocean.addColorStop(1,'#082a80');
+    ctx.fillStyle=ocean;ctx.fillRect(0,0,W,H);
+
+    // Land function
+    function land(cx,cy,rx,ry,col,rot2=0){
+      ctx.save();
+      ctx.translate(cx,cy);ctx.rotate(rot2);
+      ctx.beginPath();ctx.ellipse(0,0,rx,ry,0,0,Math.PI*2);
+      ctx.fillStyle=col;ctx.fill();ctx.restore();
+    }
+
+    const speed=(rot%(Math.PI*2))/(Math.PI*2);
+    const ox=speed*W*2;
+
+    // Africa - central
+    land(W*0.52-ox%W,H*0.54,24,34,'#2e7d32');
+    land(W*0.54-ox%W,H*0.44,15,12,'#388e3c');
+    land(W*0.51-ox%W,H*0.40,19,8,'#a1887f'); // Sahara
+
+    // Europe
+    land(W*0.49-ox%W,H*0.31,15,10,'#388e3c');
+    land(W*0.48-ox%W,H*0.25,7,12,'#2e7d32',0.15);
+
+    // Middle East
+    land(W*0.57-ox%W,H*0.39,12,9,'#bcaaa4');
+
+    // Asia - large
+    land(W*0.70-ox%W,H*0.33,44,20,'#2e7d32');
+    land(W*0.73-ox%W,H*0.40,22,13,'#388e3c');
+    land(W*0.85-ox%W,H*0.28,16,10,'#2e7d32');
+    land(W*0.68-ox%W,H*0.26,20,8,'#43a047');
+
+    // Southeast Asia islands
+    land(W*0.82-ox%W,H*0.50,10,8,'#388e3c');
+    land(W*0.88-ox%W,H*0.53,8,7,'#2e7d32');
+
+    // Australia
+    land(W*0.80-ox%W,H*0.64,18,11,'#a1887f');
+    land(W*0.76-ox%W,H*0.62,6,5,'#388e3c');
+
+    // Americas (with wrap)
+    for(let wrap2=0;wrap2<=1;wrap2++){
+      const wox=wrap2?ox-W*2:ox;
+      land(W*0.23-wox%W,H*0.36,12,26,'#2e7d32');
+      land(W*0.25-wox%W,H*0.56,10,21,'#388e3c');
+      land(W*0.20-wox%W,H*0.34,8,14,'#43a047');
+      // Greenland
+      land(W*0.31-wox%W,H*0.19,8,12,'#e0f2f1',0.25);
+    }
+
+    // Ice caps
+    ctx.fillStyle='#e8f5e9';
+    ctx.beginPath();ctx.ellipse(W/2,H/2-R+8,52,16,0,0,Math.PI*2);ctx.fill();
+    ctx.fillStyle='#e1f5fe';
+    ctx.beginPath();ctx.ellipse(W/2,H/2+R-8,52,16,0,0,Math.PI*2);ctx.fill();
+
+    // Thin cloud wisps
+    ctx.globalAlpha=0.13;
+    land(W*0.43-ox%W*0.65,H*0.28,35,7,'#fff',0.22);
+    land(W*0.61-ox%W*0.65,H*0.53,26,6,'#fff',-0.15);
+    land(W*0.33-ox%W*0.65,H*0.63,22,5,'#fff',0.08);
+    ctx.globalAlpha=1;
+
+    ctx.restore();
+
+    // Atmosphere rim
+    const atmo=ctx.createRadialGradient(W/2,H/2,R*0.70,W/2,H/2,R+6);
+    atmo.addColorStop(0,'rgba(100,181,246,0)');
+    atmo.addColorStop(0.6,'rgba(66,165,245,0.10)');
+    atmo.addColorStop(1,'rgba(30,136,229,0.32)');
+    ctx.beginPath();ctx.arc(W/2,H/2,R+6,0,Math.PI*2);
+    ctx.fillStyle=atmo;ctx.fill();
+
+    // Night shadow (right side)
+    const shadow=ctx.createRadialGradient(W*0.82,H/2,0,W*0.75,H/2,R*1.1);
+    shadow.addColorStop(0,'rgba(0,0,10,0.90)');
+    shadow.addColorStop(0.5,'rgba(0,0,8,0.55)');
+    shadow.addColorStop(1,'rgba(0,0,0,0)');
+    ctx.beginPath();ctx.arc(W/2,H/2,R+6,0,Math.PI*2);
+    ctx.fillStyle=shadow;ctx.fill();
+
+    // Specular highlight (top-left)
+    const spec=ctx.createRadialGradient(W*0.34,H*0.30,0,W*0.36,H*0.33,R*0.65);
+    spec.addColorStop(0,'rgba(255,255,255,0.20)');
+    spec.addColorStop(0.4,'rgba(200,230,255,0.07)');
+    spec.addColorStop(1,'rgba(255,255,255,0)');
+    ctx.beginPath();ctx.arc(W/2,H/2,R+6,0,Math.PI*2);
+    ctx.fillStyle=spec;ctx.fill();
+  }
+
+  function animate(){angle+=0.003;drawEarth(angle);requestAnimationFrame(animate);}
+  window.addEventListener('load',()=>{animate();setTimeout(()=>{wrap.style.opacity='0.97';},400);});
+})();
+/* DELETED OLD EARTH */
+(function OLDDEL(){if(false){
+  const wrap=document.getElementById('earth-wrap');
+  const canvas=document.getElementById('earth-canvas');
   const ctx=canvas.getContext('2d');
   const W=280,R=140;
   let angle=0;
@@ -505,8 +620,9 @@ footer{position:relative;z-index:1;border-top:1px solid var(--b1);background:rgb
     ctx.beginPath();ctx.arc(W/2,W/2,R,0,Math.PI*2);ctx.fillStyle=spec;ctx.fill();
   }
   function animate(){angle+=.003;drawEarth(angle);requestAnimationFrame(animate);}
-  window.addEventListener('load',()=>{animate();setTimeout(()=>{wrap.style.opacity='.97';},350);});
-})();
+  // OLD EARTH REMOVED
+}})();
+// END OLD
 
 /* ═══ STARFIELD ═══ */
 (function(){
@@ -615,8 +731,13 @@ document.querySelectorAll('.scard,.pcard').forEach(card=>{
 
 /* ═══ PAKISTAN MAP ═══ */
 function initPakMap(){
-  const map=L.map('pak-map',{center:[30.3753,69.3451],zoom:5,scrollWheelZoom:false});
-  L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png',{attribution:'&copy; CARTO',subdomains:'abcd',maxZoom:19}).addTo(map);
+  if(typeof L === 'undefined'){setTimeout(initPakMap,200);return;}
+  const mapEl=document.getElementById('pak-map');
+  if(!mapEl||mapEl._leaflet_id){return;}
+  const map=L.map('pak-map',{center:[30.3753,69.3451],zoom:5,scrollWheelZoom:false,zoomControl:true});
+  L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',{attribution:'&copy; OpenStreetMap',maxZoom:19}).addTo(map);
+  // Also add dark overlay
+  map.getContainer().style.filter='invert(1) hue-rotate(180deg) brightness(0.85) contrast(1.1)';
   const tc={EIA:'#22c55e',ESG:'#0d9488',GIS:'#4ade80',GHG:'#86efac',IEE:'#1a6b45',Community:'#2dd4bf'};
   const projects=[
     {lat:24.8607,lng:67.0011,title:'Industrial Zone EIA',type:'EIA',city:'Karachi, Sindh',desc:'Full EIA for a major industrial facility — air dispersion modelling, effluent management, and community risk assessment leading to EPA approval.'},
