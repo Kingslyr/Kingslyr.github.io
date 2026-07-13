@@ -808,16 +808,52 @@ document.querySelectorAll('.scard,.pcard').forEach(card=>{
 <script>
 /* ═══ ESG SCORE CHECKER ═══ */
 function calcESG(){
-  const company = document.getElementById('esg-company').value.trim();
-  const sector  = document.getElementById('esg-sector').value;
-  const size    = document.getElementById('esg-size').value;
-  const policy  = document.getElementById('esg-policy').value;
-  const carbon  = document.getElementById('esg-carbon').value;
-  const social  = document.getElementById('esg-social').value;
-  const gov     = document.getElementById('esg-gov').value;
+  const companyEl = document.getElementById('esg-company');
+  const sectorEl  = document.getElementById('esg-sector');
+  const sizeEl    = document.getElementById('esg-size');
+  const policyEl  = document.getElementById('esg-policy');
+  const carbonEl  = document.getElementById('esg-carbon');
+  const socialEl  = document.getElementById('esg-social');
+  const govEl     = document.getElementById('esg-gov');
+  const resultBox = document.getElementById('esg-result');
 
-  if(!company||!sector||!size||!policy||!carbon||!social||!gov){
-    alert('Please fill in all fields to get your ESG score.');return;
+  const company = companyEl.value.trim();
+  const sector  = sectorEl.value;
+  const size    = sizeEl.value;
+  const policy  = policyEl.value;
+  const carbon  = carbonEl.value;
+  const social  = socialEl.value;
+  const gov     = govEl.value;
+
+  // Figure out exactly which fields are missing instead of relying on alert()
+  const missing = [];
+  if(!company) missing.push({el: companyEl, label: 'Company Name'});
+  if(!sector)  missing.push({el: sectorEl,  label: 'Industry Sector'});
+  if(!size)    missing.push({el: sizeEl,    label: 'Company Size'});
+  if(!policy)  missing.push({el: policyEl,  label: 'Environmental Policy'});
+  if(!carbon)  missing.push({el: carbonEl,  label: 'Carbon Reporting'});
+  if(!social)  missing.push({el: socialEl,  label: 'Social Responsibility'});
+  if(!gov)     missing.push({el: govEl,     label: 'Governance'});
+
+  // Clear any previous error highlighting
+  [companyEl,sectorEl,sizeEl,policyEl,carbonEl,socialEl,govEl].forEach(el=>{
+    el.style.borderColor = '';
+  });
+
+  if(missing.length){
+    // Highlight the empty fields in red
+    missing.forEach(m => { m.el.style.borderColor = '#ef4444'; });
+    resultBox.innerHTML =
+      '<div class="esg-placeholder">' +
+        '<div class="esg-placeholder-icon" style="opacity:1;color:#ef4444;">⚠️</div>' +
+        '<div style="font-size:.9rem;">Please fill in: <strong style="color:#ef4444;">' +
+          missing.map(m=>m.label).join(', ') +
+        '</strong></div>' +
+      '</div>';
+    // Scroll the first missing field into view so the user can see it
+    missing[0].el.scrollIntoView({behavior:'smooth', block:'center'});
+    missing[0].el.focus();
+    return;
   }
 
   // Scoring
@@ -859,7 +895,7 @@ function calcESG(){
   const barS = Math.min(100, Math.round(sScore * 2.5));
   const barG = Math.min(100, Math.round(gScore * 2.5));
 
-  document.getElementById('esg-result').innerHTML =
+  resultBox.innerHTML =
     '<div class="esg-score-wrap">' +
       '<div class="esg-score-label">ESG Score — ' + company + '</div>' +
       '<div class="esg-score-val">' + total + '</div>' +
@@ -884,6 +920,16 @@ function calcESG(){
     });
   }, 100);
 }
+
+// Also bind via addEventListener as a fallback, in case the inline onclick
+// attribute ever gets stripped (e.g. by some CMS/embed sanitizers).
+document.addEventListener('DOMContentLoaded', function(){
+  var btn = document.querySelector('.esg-btn');
+  if(btn && !btn.dataset.bound){
+    btn.dataset.bound = '1';
+    btn.addEventListener('click', calcESG);
+  }
+});
 </script>
 
 
