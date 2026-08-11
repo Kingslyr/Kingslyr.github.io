@@ -1844,9 +1844,9 @@ document.addEventListener('click',e=>{if(!e.target.closest('.links>li'))document
       camera.position.set(0,0,3.2);
 
       /* LIGHTING — from reference */
-      const ambient=new THREE.AmbientLight(0xffffff,1.2);scene.add(ambient);
-      const sun=new THREE.DirectionalLight(0xffffff,3);sun.position.set(4,3,6);scene.add(sun);
-      const rim=new THREE.DirectionalLight(0x00ffd0,2);rim.position.set(-5,-3,-4);scene.add(rim);
+      const ambient=new THREE.AmbientLight(0xffffff,0.9);scene.add(ambient);
+      const sun=new THREE.DirectionalLight(0xffffff,2.2);sun.position.set(4,3,6);scene.add(sun);
+      const rim=new THREE.DirectionalLight(0x4dd7ff,1.1);rim.position.set(-5,-3,-4);scene.add(rim);
 
       /* STARFIELD — reference: 20000 stars */
       const starGeo=new THREE.BufferGeometry();
@@ -1875,7 +1875,7 @@ document.addEventListener('click',e=>{if(!e.target.closest('.links>li'))document
         const pivot=new THREE.Group();
         const body=new THREE.Mesh(
           new THREE.BoxGeometry(.05,.05,.12),
-          new THREE.MeshStandardMaterial({color:0xffffff,emissive:0x00ffd0,emissiveIntensity:2})
+          new THREE.MeshStandardMaterial({color:0xffffff,emissive:0x69d8ff,emissiveIntensity:0.9})
         );
         body.position.x=1.55;
         pivot.rotation.y=(Math.PI*2/6)*i;
@@ -1903,20 +1903,20 @@ document.addEventListener('click',e=>{if(!e.target.closest('.links>li'))document
       function buildScene(earthTex){
         /* EARTH — reference material */
         const earth=new THREE.Mesh(
-          new THREE.SphereGeometry(1,128,128),
+          new THREE.SphereGeometry(0.8,128,128),
           new THREE.MeshStandardMaterial({
             map:earthTex,
-            emissive:new THREE.Color(0x1affd5),
-            emissiveIntensity:.22,
-            roughness:.78,
-            metalness:.04
+            emissive:new THREE.Color(0x0d1f2f),
+            emissiveIntensity:.06,
+            roughness:.84,
+            metalness:.02
           })
         );
         scene.add(earth);
 
         /* PAKISTAN GLOW MARKER — from reference */
         const marker=new THREE.Mesh(
-          new THREE.SphereGeometry(.028,24,24),
+          new THREE.SphereGeometry(.022,24,24),
           new THREE.MeshBasicMaterial({color:0x00ff99})
         );
         const lat=30,lon=70;
@@ -1932,15 +1932,15 @@ document.addEventListener('click',e=>{if(!e.target.closest('.links>li'))document
 
         /* CLOUDS */
         const clouds=new THREE.Mesh(
-          new THREE.SphereGeometry(1.012,128,128),
-          new THREE.MeshStandardMaterial({map:new THREE.TextureLoader().load('assets/earth-clouds.png'),transparent:true,opacity:.45,depthWrite:false})
+          new THREE.SphereGeometry(0.81,128,128),
+          new THREE.MeshStandardMaterial({map:new THREE.TextureLoader().load('assets/earth-clouds.png'),transparent:true,opacity:.22,depthWrite:false})
         );
         scene.add(clouds);
 
         /* ATMOSPHERE */
         const atmosphere=new THREE.Mesh(
-          new THREE.SphereGeometry(1.08,128,128),
-          new THREE.MeshBasicMaterial({color:0x00ffd0,transparent:true,opacity:.14,side:THREE.BackSide})
+          new THREE.SphereGeometry(0.86,128,128),
+          new THREE.MeshBasicMaterial({color:0x4fdcff,transparent:true,opacity:.06,side:THREE.BackSide})
         );
         scene.add(atmosphere);
 
