@@ -6,15 +6,33 @@ function initAnimation() {
         return;
     }
 
-// Initialize Scene, Camera, and Renderer
+// Initialize Scene, Camera, and Renderer (attach to hero container)
 const scene = new THREE.Scene();
-const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 2000);
-const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
-
-renderer.setSize(window.innerWidth, window.innerHeight);
-renderer.setPixelRatio(window.devicePixelRatio);
+let container = document.getElementById('canvas-container') || document.getElementById('earth-container') || document.getElementById('pak-map') || document.getElementById('canvas');
+if (!container) container = document.body;
+const rect = container.getBoundingClientRect ? container.getBoundingClientRect() : { width: window.innerWidth, height: window.innerHeight };
+const camera = new THREE.PerspectiveCamera(45, rect.width / rect.height, 0.1, 2000);
+const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true, powerPreference: 'high-performance' });
+renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 2));
+renderer.outputEncoding = THREE.sRGBEncoding;
+renderer.toneMapping = THREE.ACESFilmicToneMapping;
+renderer.toneMappingExposure = 1.0;
 renderer.shadowMap.enabled = true;
-document.getElementById('canvas-container').appendChild(renderer.domElement);
+// Attach renderer to the chosen container (fall back to body)
+if (container && container !== document.body) container.appendChild(renderer.domElement); else document.body.appendChild(renderer.domElement);
+function updateRendererSize() {
+    const w = (container && container.clientWidth) || window.innerWidth;
+    const h = (container && container.clientHeight) || window.innerHeight;
+    camera.aspect = w / h;
+    camera.updateProjectionMatrix();
+    renderer.setSize(w, h);
+}
+updateRendererSize();
+if (window.ResizeObserver && container) {
+    new ResizeObserver(updateRendererSize).observe(container);
+} else {
+    window.addEventListener('resize', updateRendererSize);
+}
 
 // Add Scene Lighting
 const ambientLight = new THREE.AmbientLight(0x9fdcff, 0.72);
@@ -30,7 +48,7 @@ fillLight.position.set(-6, -1, 6);
 scene.add(fillLight);
 
 // Create Starry Particle Field Background
-const PARTICLE_COUNT = 11000;
+const PARTICLE_COUNT = 6000;
 const particleGeometry = new THREE.BufferGeometry();
 const particlePositions = new Float32Array(PARTICLE_COUNT * 3);
 const particleVelocities = new Float32Array(PARTICLE_COUNT * 3);
@@ -48,12 +66,13 @@ for (let i = 0; i < PARTICLE_COUNT * 3; i += 3) {
 particleGeometry.setAttribute('position', new THREE.BufferAttribute(particlePositions, 3));
 
 const particleMaterial = new THREE.PointsMaterial({
-    size: 0.32,
-    color: 0x7fdcff,
+    size: 0.22,
+    color: 0x9feaff,
     transparent: true,
-    opacity: 0.72,
+    opacity: 0.68,
     sizeAttenuation: true,
-    blending: THREE.AdditiveBlending
+    blending: THREE.AdditiveBlending,
+    depthWrite: false
 });
 
 const starfield = new THREE.Points(particleGeometry, particleMaterial);
@@ -68,17 +87,13 @@ const earthTexture = textureLoader.load('/earth.jpg', (texture) => {
 
 // Earth Sphere
 const earthGeometry = new THREE.SphereGeometry(3, 64, 64);
-const earthMaterial = new THREE.MeshPhysicalMaterial({
+const earthMaterial = new THREE.MeshStandardMaterial({
     map: earthTexture,
-    roughness: 0.62,
-    metalness: 0.12,
-    clearcoat: 0.42,
-    clearcoatRoughness: 0.28,
-    sheen: 0.68,
-    sheenColor: new THREE.Color(0x79ddff),
-    emissive: new THREE.Color(0x0a3a77),
-    emissiveIntensity: 0.28,
-    envMapIntensity: 1.2
+    roughness: 0.38,
+    metalness: 0.04,
+    envMapIntensity: 0.9,
+    emissive: new THREE.Color(0x0b2240),
+    emissiveIntensity: 0.12
 });
 
 const earth = new THREE.Mesh(earthGeometry, earthMaterial);
@@ -153,10 +168,19 @@ nodePositions.forEach((pos, idx) => {
     nodeRefs.push(node);
 });
 
-// Position Camera
+// Position Camera (frame to container)
 camera.position.z = 12;
-camera.position.y = 3;
+camera.position.y = 2.6;
 camera.lookAt(0, 0, 0);
+
+// Add subtle hemisphere for natural sky/light
+const hemi = new THREE.HemisphereLight(0x9fdcff, 0x08202a, 0.25);
+scene.add(hemi);
+
+// Slight rim directional light
+const rim = new THREE.DirectionalLight(0xa6eaff, 0.6);
+rim.position.set(-4, 3, -6);
+scene.add(rim);
 
 // Mouse Tracking
 let mouseX = 0;
@@ -164,8 +188,10 @@ let mouseY = 0;
 let scrollProgress = 0;
 
 document.addEventListener('mousemove', (event) => {
-    mouseX = (event.clientX - window.innerWidth / 2) * 0.001;
-    mouseY = (event.clientY - window.innerHeight / 2) * 0.001;
+    // compute relative to container for nicer parallax
+    const rect = container ? container.getBoundingClientRect() : { left: 0, top: 0, width: window.innerWidth, height: window.innerHeight };
+    mouseX = ((event.clientX - rect.left) - rect.width / 2) / rect.width;
+    mouseY = ((event.clientY - rect.top) - rect.height / 2) / rect.height;
 });
 
 window.addEventListener('scroll', () => {
@@ -182,9 +208,9 @@ function animate() {
     
     const time = frameCount * 0.001;
     
-    // Rotate Earth slowly
+    // Rotate Earth slowly and add subtle tilt
     earth.rotation.y += earth.userData.rotationSpeed;
-    earth.rotation.x = Math.sin(time * 0.3) * 0.15;
+    earth.rotation.x += (Math.sin(time * 0.3) * 0.12 - earth.rotation.x) * 0.02;
     
     // Pulsing network nodes
     nodeRefs.forEach((node, idx) => {
@@ -215,9 +241,9 @@ function animate() {
     starfield.rotation.x = Math.sin(time * 0.15) * 0.03;
     starfield.material.opacity = 0.58 + Math.sin(time * 0.9) * 0.08;
     
-    // Smooth camera follow mouse
-    camera.position.x += (mouseX * 8 - camera.position.x) * 0.05;
-    camera.position.y += (-mouseY * 6 + 3 - camera.position.y) * 0.05;
+    // Smooth camera follow mouse (use container-relative mouse)
+    camera.position.x += (mouseX * 4 - camera.position.x) * 0.06;
+    camera.position.y += (-mouseY * 2 + 2.6 - camera.position.y) * 0.06;
     camera.position.z += (12 - scrollProgress * 4 - camera.position.z) * 0.04;
     
     camera.lookAt(earth.position);
@@ -225,11 +251,10 @@ function animate() {
     renderer.render(scene, camera);
 }
 
-// Handle Window Resizing
+// Ensure legacy resize events use the container-aware updater
+// (we also use ResizeObserver when available)
 window.addEventListener('resize', () => {
-    camera.aspect = window.innerWidth / window.innerHeight;
-    camera.updateProjectionMatrix();
-    renderer.setSize(window.innerWidth, window.innerHeight);
+    try { updateRendererSize(); } catch (e) { /* ignore */ }
 });
 
 // Start Animation
